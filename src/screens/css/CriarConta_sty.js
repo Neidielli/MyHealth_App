@@ -59,7 +59,7 @@ const estilo = StyleSheet.create({
     
         },
         textInput: {
-            margin: 5,
+            marginTop: 10,
             color: 'white',
             fontSize: 20,
             fontWeight: 400,

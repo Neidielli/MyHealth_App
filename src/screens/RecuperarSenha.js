@@ -20,16 +20,28 @@ const RecuperarSenha = () => {
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
 
             <View style={theme == 'light' ? estilo.light.main : estilo.dark.main}>
-                <View style={theme == 'light' ? estilo.light.mainInput : estilo.dark.mainInput}>
+                {/* <View style={theme == 'light' ? estilo.light.mainInput : estilo.dark.mainInput}>
                     <TextInput
                     label="E-mail"
                     style={theme == 'light' ? estilo.light.inputText : estilo.dark.inputText}
-                    value={email}
-                    onChangeText={setEmail} 
+                
                     />
-                </View>
+                </View> */}
 
-                {showInvalidMsg && <Text style={{ textAlign: 'center', color: '#ff0000' }}>E-mail inválido</Text>}
+                <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
+                            <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>E-mail </Text>
+                            <TextInput
+                                style={theme == 'light' ? estilo.light.input : estilo.dark.input}
+                                value={email}
+                                onChangeText={setEmail}
+                                placeholderTextColor="#419ED7"
+                            />
+                </View> 
+
+                <View style={theme == 'light' ? estilo.light.erro : estilo.dark.erro}>
+                    {showInvalidMsg && <Text style={theme == 'light' ? estilo.light.textErro : estilo.dark.textErro}>E-mail inválido</Text>}
+                </View>
+                
 
                 <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={RecuperarSenha}>
                     <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Recuperar senha</Text>

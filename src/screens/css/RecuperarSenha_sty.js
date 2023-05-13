@@ -9,10 +9,40 @@ const estilo = StyleSheet.create({
            height: '100%',
         },
         main: {
-             flex: 2,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         mainInput: {
             alignItems: 'center'
+        },
+        formDiv: {
+            flexDirection: 'row',
+            marginBottom: 90,          
+        },
+        textInput: {
+            marginTop: 10,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+            marginLeft: 'auto',   
+        },
+        input: {
+            width: 300,
+            height: 40,
+            fontSize: 20,
+            color: '#3F92C5',
+            borderColor: 'white',
+            borderWidth: 1,
+            borderRadius: 4,
+            marginTop: 3,
+            fontFamily: 'AveriaLibre-Regular',
+            backgroundColor: 'white',
+            paddingBottom: 5,
+    
         },
         inputText: {
             width: 250,
@@ -24,11 +54,27 @@ const estilo = StyleSheet.create({
             fontFamily: 'AveriaLibre-Bold',
             backgroundColor: 'white',
             paddingBottom: 5,
+        },
+        erro: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            // marginBottom: 14,
+            // marginTop: 10,
+    
+        },
+        textErro: {
+            color: "red",
+            fontSize: 16,
+            marginTop: -25,
+            alignSelf: 'flex-start',
+            fontFamily: 'AveriaLibre-Regular',
         }, 
         primaryButton: {
             backgroundColor: '#49B976',
             height: 50,
-            width: 150,
+            width: 250,
             marginTop: 20,
             borderRadius: 4,
             borderColor: '#37BD6D',
