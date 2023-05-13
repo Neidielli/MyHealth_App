@@ -6,6 +6,7 @@ import Home from './Home';
 import CriarConta from './CriarConta';
 import RecuperarSenha from './RecuperarSenha';
 import NovaVacina from './NovaVacina';
+import EditarVacina from './EditarVacina';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,7 @@ const Navigation = () => {
                 <Stack.Screen name='CriarConta' component={CriarConta} />
                 <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} />
                 <Stack.Screen name='NovaVacina' component={NovaVacina} />
-                
+                <Stack.Screen name='EditarVacina' component={EditarVacina} />
         
             </Stack.Navigator>
         </NavigationContainer>
