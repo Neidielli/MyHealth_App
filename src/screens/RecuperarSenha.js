@@ -23,7 +23,7 @@ const RecuperarSenha = () => {
                 <View style={theme == 'light' ? estilo.light.mainInput : estilo.dark.mainInput}>
                     <TextInput
                     label="E-mail"
-                    style={theme == 'light' ? estilo.light.input : estilo.dark.input}
+                    style={theme == 'light' ? estilo.light.inputText : estilo.dark.inputText}
                     value={email}
                     onChangeText={setEmail} 
                     />

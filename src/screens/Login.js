@@ -23,9 +23,7 @@ const Login = (props) => {
     }
   }
   const goToCriarConta = () => {
-    console.log('testando1')
     props.navigation.navigate('CriarConta');
-    console.log('testando2')
   }
   const goToRecuperarSenha = () => {
     props.navigation.navigate('RecuperarSenha');

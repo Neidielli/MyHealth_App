@@ -43,6 +43,16 @@ const estilo = StyleSheet.create({
                alignSelf: 'center',
                fontFamily: 'AveriaLibre-Regular'
         },
+        srcBar: {
+            width: '90%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 20,
+            marginBottom: 20,
+            borderRadius: 1,
+            backgroundColor: '#FFFFFF',
+    
+        }
     },
 
     dark: {
@@ -86,6 +96,15 @@ const estilo = StyleSheet.create({
             alignSelf: 'center',
             fontFamily: 'AveriaLibre-Regular'
         },
+        srcBar: {
+            width: '90%',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            marginTop: 20,
+            marginBottom: 20,
+            borderRadius: 1,
+    
+        }
     },
 })
 

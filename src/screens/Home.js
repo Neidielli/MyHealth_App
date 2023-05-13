@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Appearance } from "react-native";
 import { estilo } from './css/Home_sty.js'
 import { useState } from "react";
-import {TextInput } from 'react-native-paper';
+import {TextInput, Searchbar } from 'react-native-paper';
 
 const Home = (props) => {
 
@@ -10,6 +10,8 @@ const Home = (props) => {
     const goToNovaVacina = () => {
         props.navigation.navigate('NovaVacina');
     }
+    const [searchQuery, setSearchQuery] = useState('');
+    const Search = query => setSearchQuery(query);
 
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
@@ -24,11 +26,14 @@ const Home = (props) => {
                         </View>
                     </View>
 
-                    <TextInput
-                        label="Pesquisar vacina..."
-                        style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                        value={pesquisa}
-                        onChangeText={setPesquisa}
+                    <Searchbar
+                        icon={require('../../assets/images/vacina-icone.png')}
+                        style={theme == 'light' ? estilo.light.srcBar : estilo.dark.srcBar}
+                        placeholder="Pesquisar Vacina..."
+                        onChangeText={Search}
+                        value={searchQuery}
+                        iconColor="#8B8B8B"
+                        placeholderTextColor="#8B8B8B"
                     />
                 </View>
 

@@ -55,6 +55,7 @@ const estilo = StyleSheet.create({
               borderRadius: 4,
               marginTop: 25,
               width: 375,
+              height: 50,
               fontFamily: 'AveriaLibre-Regular',
         },
         headerTitle: {

@@ -15,11 +15,15 @@ const estilo = StyleSheet.create({
             alignItems: 'center'
         },
         inputText: {
-             fontSize: 20,
-             color: '#FFFFFF',
-             fontWeight: 400,
-             paddingHorizontal: 5,
-             fontFamily: 'AveriaLibre-Regular'
+            width: 250,
+            height: 30,
+            fontSize: 15,
+            color: '#419ED7',
+            borderColor: 'white',
+            borderWidth: 1,
+            fontFamily: 'AveriaLibre-Bold',
+            backgroundColor: 'white',
+            paddingBottom: 5,
         }, 
         primaryButton: {
             backgroundColor: '#49B976',
@@ -50,14 +54,20 @@ const estilo = StyleSheet.create({
             flex: 2,
         },
         mainInput: {
-            alignItems: 'center'
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginBottom: 100,
         },
         inputText: {
-             fontSize: 20,
-             color: '#FFFFFF',
-             fontWeight: 400,
-             paddingHorizontal: 5,
-             fontFamily: 'AveriaLibre-Regular'
+            width: 250,
+            height: 30,
+            fontSize: 15,
+            color: '#419ED7',
+            borderColor: 'white',
+            borderWidth: 1,
+            fontFamily: 'AveriaLibre-Bold',
+            backgroundColor: 'white',
+            paddingBottom: 5,
         },
         primaryButton: {
             backgroundColor: '#49B976',
