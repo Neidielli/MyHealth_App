@@ -8,20 +8,91 @@ const estilo = StyleSheet.create({
            backgroundColor: '#C1E7E3',
            height: '100%',
         },
-        header: {
-            flex: 1,
-        },
         main: {
-             flex: 2,
+            flex: 1,
+            alignItems: 'center',
+            paddingTop: 70,
         },
-        footer: {
-              flex: 1,
+        inputGroup: {
+            marginTop: 45,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            rowGap: 10,
+            width: '100%',
         },
-        menu: {
-            
+        formDiv: {
+            flexDirection: 'row',
+            marginBottom: 20,
+            width: '90%',
+            borderColor: '1px solid red',
         },
-        titleHeader: {
-
+        radioDiv: {
+            flexDirection: 'row',
+            marginBottom: 20,
+            marginLeft: 20,
+            width: '80%',
+            marginLeft: -35,
+        },
+        textRadio: {
+            marginTop: 5,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+            marginLeft: 0,
+        },
+        input: {
+            width: 230,
+            height: 30,
+            fontSize: 20,
+            color: '#3F92C5',
+            borderColor: 'white',
+            borderWidth: 1,
+            borderRadius: 4,
+            marginTop: 3,
+            fontFamily: 'AveriaLibre-Regular',
+            backgroundColor: 'white',
+            paddingBottom: 5,
+    
+        },
+        textInput: {
+            margin: 5,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+            marginLeft: 'auto',
+    
+        },
+        containerRadio: {
+            width: 200,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: -20,
+        },
+        radio: {
+           marginLeft: 25,
+        },
+        textErro: {
+            color: "red",
+            fontSize: 16,
+            marginTop: -25,
+            alignSelf: 'flex-start',
+            fontFamily: 'AveriaLibre-Regular',
+        },
+        erro: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            marginBottom: 14,
+            marginTop: 10,
+    
         },
         primaryButton: {
                backgroundColor: '#49B976',
@@ -48,20 +119,69 @@ const estilo = StyleSheet.create({
             backgroundColor: '#98B5B2',
             height: '100%'
         },
-        header: {
-            flex: 1,
-        },
         main: {
-            flex: 2,
-        },
-        footer: {
             flex: 1,
+            alignItems: 'center',
+            paddingTop: 70,
         },
-        menu: {
-        
+        inputsGroup: {
+            marginTop: 45,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            rowGap: 10,
+            width: '100%',
         },
-        titleHeader: {
-            
+        formDiv: {
+            flexDirection: 'row',
+            marginBottom: 20,
+            width: '90%',
+        },
+        input: {
+            width: 230,
+            height: 30,
+            fontSize: 20,
+            color: '#3F92C5',
+            borderColor: 'white',
+            borderWidth: 1,
+            borderRadius: 4,
+            marginTop: 3,
+            fontFamily: 'AveriaLibre-Regular',
+            backgroundColor: 'white',
+            paddingBottom: 5,
+    
+        },
+        textInput: {
+            margin: 5,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+            marginLeft: 'auto',
+    
+        },
+        containerRadio: {
+            width: 252,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: -20,   
+        },
+        textErro: {
+            color: "red",
+            fontSize: 16,
+            marginTop: -25,
+            alignSelf: 'flex-start',
+            fontFamily: 'AveriaLibre-Regular',
+        },
+        erro: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            marginBottom: 14,
+            marginTop: 10,
         },
         primaryButton: {
                backgroundColor: '#49B976',

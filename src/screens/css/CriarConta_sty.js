@@ -13,7 +13,7 @@ const estilo = StyleSheet.create({
             alignItems: 'center',
             paddingTop: 70,
         },
-        inputsGroup: {
+        inputGroup: {
             marginTop: 45,
             display: 'flex',
             alignItems: 'center',
