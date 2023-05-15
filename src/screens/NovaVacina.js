@@ -1,18 +1,18 @@
-import { View, Text, TouchableOpacity, Appearance } from "react-native";
+import { View, Text, TouchableOpacity, Appearance, Image } from "react-native";
 import { estilo } from './css/NovaVacina_sty.js'
 import { useState } from "react";
 import { TextInput, RadioButton } from 'react-native-paper';
-import { v4 as uuidv4 } from 'uuid';
+import  v4  from 'uuid';
 import { launchImageLibrary } from 'react-native-image-picker'
-// import MaskInput, { Masks } from 'react-native-mask-input';
+import MaskInput, { Masks } from 'react-native-mask-input';
 
 
 const NovaVacina = (props) => {
 
     function novaVacina() {
-        props.navigation.navigate('Minhas Vacinas', {
+        props.navigation.navigate('Home', {
             itemAdicionar: {
-                id: uuidv4(),
+                id: v4,
                 nome: nome,
                 dataAplicacao: dataVacina,
                 dose: checked,
@@ -33,6 +33,8 @@ const NovaVacina = (props) => {
     const [comprovante, setComprovante] = useState('');
     const theme = Appearance.getColorScheme()
 
+    
+
     const goToHome = () => {
         props.navigation.navigate('Home');
     }
@@ -42,7 +44,7 @@ const NovaVacina = (props) => {
             if (response) {
                 if (response.didCancel !== true) {
                     setComprovante(response.assets[0].src);
-                    console.log(response.assets[0])
+                    console.log(response.assets[0].src)
                 }
             }
         });
@@ -136,31 +138,31 @@ const NovaVacina = (props) => {
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Comprovante </Text>
                         
-                        <View>
-                        <TouchableOpacity>
-                                <Text>Selecionar imagem...</Text>
+                        <View style={theme == 'light' ? estilo.light.containerImagem : estilo.dark.containerImagem}>
+                        <TouchableOpacity onPress={() => comprovanteVacina}>
+                                <Text style={theme == 'light' ? estilo.light.btnComprovante : estilo.dark.btnComprovante}>Selecionar imagem...</Text>
                             </TouchableOpacity>
                             {
                                 (comprovanteVacina != '') ?
-                                    <Image/>
+                                    <Image source={{src: comprovante}}/>
                                 :
-                                setComprovante() && <Image style={{ marginTop: 20, width: 200, height: 100 }}/>
+                                setComprovante(require('../../assets/images/sair.png')) && <Image  source={{src: comprovante}} style={{ marginTop: 20, width: 200, height: 100 }}/>
                             }
                         </View>
                     </View> 
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Próxima vacina </Text>
-                        {/* <MaskInput
+                        <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
                             value={proxVacina}
                             onChangeText={setProxVacina}
                             mask={Masks.DATE_DDMMYYYY}
-                        />  */}
+                        /> 
                     </View> 
                 
-                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
-                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={goToHome}>Cadastrar</Text>
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={novaVacina}>
+                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
 
                 </View>     

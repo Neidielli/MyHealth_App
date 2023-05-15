@@ -42,9 +42,12 @@ const Home = (props) => {
             comprovante: require('../../assets/images/sair.png'),
             proximaAplicacao: null
         },
-        
 
     ]
+
+    if (vacinas.length == 0) {
+        setVacinas(listaVacinas)
+    }
     // lógica do CRUD
     if (typeof props.route.params !== 'undefined') {
         if (typeof props.route.params.itemAdicionar !== 'undefined') {
@@ -77,7 +80,7 @@ const Home = (props) => {
     const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()
     const goToNovaVacina = () => {
-        props.navigation.navigate('NovaVacina');
+        props.navigation.navigate('HomeNavigator', { screen: 'NovaVacina'});
     }
     const [searchQuery, setSearchQuery] = useState('');
     const Search = query => setSearchQuery(query);
@@ -101,17 +104,15 @@ const Home = (props) => {
 
                     <FlatList data={vacinas} renderItem={ ({ item }) => <Vacina item={item} navigation={props.navigation} /> } keyExtractor={item => item.id} numColumns={2} />
 
-                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
-                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={goToNovaVacina}>Nova Vacina</Text>
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={goToNovaVacina}>
+                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Nova Vacina</Text>
                     </TouchableOpacity>
 
 
                 </View>
-  
+
         </View>
     )
-        
-
     
 }
 

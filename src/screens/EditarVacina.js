@@ -2,17 +2,17 @@ import { View, Text, Image, TouchableOpacity, Appearance, Modal } from "react-na
 import { estilo } from './css/EditarVacina_sty.js'
 import { useEffect, useState } from "react";
 import {TextInput, RadioButton } from 'react-native-paper';
-// import MaskInput, { Masks } from 'react-native-mask-input';
+import MaskInput, { Masks } from 'react-native-mask-input';
 
 const EditarVacina = (props) => {
 
     function excluir() {
         setModalVisible(!modalVisible)
-        props.navigation.navigate('Minhas Vacinas', {idApagar: id})
+        props.navigation.navigate('Home', {idApagar: id})
     }
 
     function editar() {
-        props.navigation.navigate('Minhas Vacinas', {
+        props.navigation.navigate('Home', {
             itemEditar: {
                 id: id,
                 nome: nome,
@@ -84,7 +84,7 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === '1a. dose' ? 'checked' : 'unchecked'}
+                                    status={checked === '1a. dose' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('1a. dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>1a. dose</Text>
@@ -96,7 +96,7 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === '2a. dose' ? 'checked' : 'unchecked'}
+                                    status={checked === '2a. dose' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('2a. dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>2a. dose</Text>
@@ -108,7 +108,7 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === '3a. dose' ? 'checked' : 'unchecked'}
+                                    status={checked === '3a. dose' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('3a. dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>3a. dose</Text>
@@ -120,7 +120,7 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'Dose única' ? 'checked' : 'unchecked'}
+                                    status={checked === 'Dose única' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('Dose única')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>Dose única</Text>
@@ -146,17 +146,17 @@ const EditarVacina = (props) => {
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Próxima vacina </Text>
-                        {/* <MaskInput
+                        <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
                             value={proxVacina}
                             onChangeText={setProxVacina}
                             mask={Masks.DATE_DDMMYYYY}
-                        />  */}
+                        /> 
                     </View> 
                 
                     
                     <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => editar()}> 
-                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={goToHome}>Salvar alterações</Text>
+                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Salvar alterações</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity style={theme == 'light' ? estilo.light.secondButton : estilo.dark.secondButton}>

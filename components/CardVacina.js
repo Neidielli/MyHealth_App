@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 const Vacina = (props) => {
 
     const gotoEditar = () => {
-        props.navigation.navigate('Editar Vacina', {item: props.item})
+        props.navigation.navigate('EditarVacina', {item: props.item})
     }
 
     return (
