@@ -4,33 +4,25 @@ const estilo = StyleSheet.create({
 
     light: {
         body: {
-           flex: 1,
+           flex: 100,
            backgroundColor: '#C1E7E3',
            height: '100%',
         },
         header: {
-            flex: 1,
+            flex: 20,
         },
         main: {
-             flex: 2,
-        },
-        footer: {
-              flex: 1,
+             flex: 90,
         },
         menu: {
             flexDirection: 'row',
-        },
-        menuHamb: {
-
-        },
-        titleHeader: {
-
         },
         primaryButton: {
                backgroundColor: '#49B976',
                height: 50,
                width: 150,
-               marginTop: 50,
+               marginTop: 5,
+               marginBottom: 50,
                borderRadius: 4,
                borderColor: '#37BD6D',
                alignSelf: 'center'
@@ -48,7 +40,7 @@ const estilo = StyleSheet.create({
             marginLeft: 'auto',
             marginRight: 'auto',
             marginTop: 20,
-            marginBottom: 20,
+            marginBottom: 5,
             borderRadius: 1,
             backgroundColor: '#FFFFFF',
     

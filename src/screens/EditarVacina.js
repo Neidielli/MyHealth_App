@@ -12,7 +12,7 @@ const EditarVacina = (props) => {
     const [genero, setDose] = useState('');
     // const [dataVacina, setDataVacina] = useState('');
     const [comprovante, setComprovante] = useState('');
-    const [modalVisible, setModalVisible] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const goToHome = () => {
        
