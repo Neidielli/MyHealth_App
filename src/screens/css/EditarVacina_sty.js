@@ -103,6 +103,24 @@ const estilo = StyleSheet.create({
                borderColor: '#37BD6D',
                alignSelf: 'center'
         },
+        secondButton: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            backgroundColor: '#FF8383',
+            height: 40,
+            width: '35%',
+            marginTop: 50,
+            marginRight: 5,
+            borderRadius: 4,
+            borderColor: '#FF8393',
+            alignSelf: 'center',
+            
+        },
+        trash:{
+            width: 20,
+            height:17,
+            margin: 13,
+        },
         buttonText: {
                marginTop: 5,
                color: '#FFFFFF',
@@ -110,6 +128,54 @@ const estilo = StyleSheet.create({
                justifyContent: 'center',
                alignSelf: 'center',
                fontFamily: 'AveriaLibre-Regular'
+        },
+        centralView: {
+            width: '100%',
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 22,
+            backgroundColor: 'rgba(0,0,0,0.5)'
+        },
+        modalView: {
+            margin: 20,
+            backgroundColor: "white",
+            padding: 25,
+            alignItems: "center",
+            shadowColor: "#000",
+            shadowOffset: {
+                width: 0,
+                height: 2
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 20,
+            borderRadius: 5,
+        },
+        modalButtons: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            margin: 10,
+        },
+        modalText: {
+            fontSize: 26,
+            width: 250,
+            marginBottom: 10,
+            textAlign: "center",
+            color: '#ff8383',
+            fontFamily: 'AveriaLibre-Regular'
+        },
+        buttonSim: {
+            backgroundColor: "#ff8383",
+            padding: 10,
+            borderRadius: 5,
+            marginHorizontal: 5,
+        },
+        buttonCancelar: {
+            backgroundColor: "#3f92c6",
+            padding: 10,
+            borderRadius: 5,
+            marginHorizontal: 5,
         },
     },
 
@@ -191,6 +257,24 @@ const estilo = StyleSheet.create({
                borderRadius: 4,
                borderColor: '#37BD6D',
                alignSelf: 'center'
+        },
+        secondButton: {
+            flexDirection: 'row',
+            justifyContent: 'center',
+            backgroundColor: '#FF8383',
+            height: 40,
+            width: 150,
+            marginTop: 50,
+            marginRight: 5,
+            borderRadius: 4,
+            borderColor: '#FF8393',
+            alignSelf: 'center',
+            
+        },
+        trash:{
+            width: 20,
+            height:17,
+            margin: 13,
         },
         buttonText: {
             marginTop: 5,

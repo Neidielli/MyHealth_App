@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Appearance } from "react-native";
+import { View, Text, Image, TouchableOpacity, Appearance, Modal } from "react-native";
 import { estilo } from './css/EditarVacina_sty.js'
 import { useState } from "react";
 import {TextInput, RadioButton } from 'react-native-paper';
@@ -12,10 +12,10 @@ const EditarVacina = (props) => {
     const [genero, setDose] = useState('');
     // const [dataVacina, setDataVacina] = useState('');
     const [comprovante, setComprovante] = useState('');
-    const [senha, setSenha] = useState('');
+    const [modalVisible, setModalVisible] = useState(true);
 
     const goToHome = () => {
-        props.navigation.navigate('Home');
+       
     }
 
     return (
@@ -126,6 +126,38 @@ const EditarVacina = (props) => {
                     <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={goToHome}>Salvar alterações</Text>
                     </TouchableOpacity>
+
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.secondButton : estilo.dark.secondButton}>
+                        <Image style={theme == 'light' ? estilo.light.trash : estilo.dark.trash} source={require('../../assets/images/trash.png')}/>
+                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={() => setModalVisible(!modalVisible)}>Excluir</Text>
+                    </TouchableOpacity>
+
+                    <Modal
+                        animationType='none'
+                        visible={modalVisible}
+                        transparent={true}
+                        onRequestClose={() => {
+                            console.log('Fechou')
+                        }}
+                    >
+                        <View style={theme == 'light' ? estilo.light.centralView : estilo.dark.centralView}>
+                            <View style={theme == 'light' ? estilo.light.modalView : estilo.dark.modalView}>
+                                <Text style={theme == 'light' ? estilo.light.modalText : estilo.dark.modalText}>Tem certeza que deseja remover essa vacina?</Text>
+                                <View style={theme == 'light' ? estilo.light.modalButtons : estilo.dark.modalButtons}>
+                                    <TouchableOpacity
+                                        style={[theme == 'light' ? estilo.light.buttonSim : estilo.dark.buttonSim]}
+                                        onPress={() => excluirVacina(id)}>
+                                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>SIM</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        style={[theme == 'light' ? estilo.light.buttonCancelar : estilo.dark.buttonCancelar]}
+                                        onPress={() => setModalVisible(!modalVisible)}>
+                                        <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>CANCELAR</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </Modal>
 
                 </View>     
             

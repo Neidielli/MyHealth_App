@@ -29,14 +29,14 @@ const Navigation = () => {
         <NavigationContainer>
 
             <Stack.Navigator screenOptions={{headerTitleStyle: {fontSize: 30, fontFamily: 'AveriaLibre-Regular'}, headerTintColor: '#419ED7', headerStyle: {backgroundColor: '#C1E7F9'}}}>
-                
+            <Stack.Screen name='EditarVacina' component={EditarVacina} options={{headerTitle: 'Editar Vacina'}} />
                 <Stack.Screen name='Login' component={Login} options={{headerShown:false}} />
                 
                 <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} options={{headerShown: false }} />
                 <Stack.Screen name='CriarConta' component={CriarConta} options={{headerTitle: 'Nova Conta'}} />
                 <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} options={{headerTitle: 'MyHealth'}} />
                 <Stack.Screen name='NovaVacina' component={NovaVacina} options={{headerTitle: 'Nova Vacina'}} />
-                <Stack.Screen name='EditarVacina' component={EditarVacina} options={{headerTitle: 'Editar Vacina'}} />
+                
                 <Stack.Screen name='ProximasVacinas' component={ProximasVacinas} options={{headerTitle: 'Proximas Vacinas'}} />
 
             </Stack.Navigator>
