@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Appearance } from "react-native";
 import { estilo } from './css/ProximaVacinas_sty.js'
 import { useState } from "react";
 import {TextInput } from 'react-native-paper';

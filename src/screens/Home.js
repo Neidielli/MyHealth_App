@@ -16,18 +16,9 @@ const Home = (props) => {
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
                 <View style={theme == 'light' ? estilo.light.header : estilo.dark.header}>
-                    <View style={theme == 'light' ? estilo.light.menu : estilo.dark.menu}>
-                        <View style={theme == 'light' ? estilo.light.menuHamb : estilo.dark.menuHamb}>
-                            <Text>Menu Hamburguer</Text>
-                        </View>
-
-                        <View style={theme == 'light' ? estilo.light.titleHeader : estilo.dark.titleHeader}>
-                            <Text>Minhas Vacinas</Text>
-                        </View>
-                    </View>
 
                     <Searchbar
-                        icon={require('../../assets/images/vacina-icone.png')}
+                        icon={require('../../assets/images/searchIcon.png')}
                         style={theme == 'light' ? estilo.light.srcBar : estilo.dark.srcBar}
                         placeholder="Pesquisar Vacina..."
                         onChangeText={Search}

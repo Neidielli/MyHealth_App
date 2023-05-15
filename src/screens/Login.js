@@ -19,7 +19,7 @@ const Login = (props) => {
       setShowInvalidMsg(true);
     } else {
       setShowInvalidMsg(false);
-      props.navigation.navigate('Home');
+      props.navigation.navigate('DrawerNavigation', { screen: 'Home' });
     }
   }
   const goToCriarConta = () => {
