@@ -1,21 +1,51 @@
 import { View, Text, TouchableOpacity, Appearance } from "react-native";
 import { estilo } from './css/NovaVacina_sty.js'
 import { useState } from "react";
-import {TextInput, RadioButton } from 'react-native-paper';
+import { TextInput, RadioButton } from 'react-native-paper';
+import { v4 as uuidv4 } from 'uuid';
+import { launchImageLibrary } from 'react-native-image-picker'
+// import MaskInput, { Masks } from 'react-native-mask-input';
+
 
 const NovaVacina = (props) => {
 
-    const theme = Appearance.getColorScheme()
+    function novaVacina() {
+        props.navigation.navigate('Minhas Vacinas', {
+            itemAdicionar: {
+                id: uuidv4(),
+                nome: nome,
+                dataAplicacao: dataVacina,
+                dose: checked,
+                proximaAplicacao: proxVacina,
+                comprovante: comprovanteVacina,
+            }
+        })
+        setDataVacina('')
+        setProxVacina('')
+        setNome('')
+        setChecked('')
+    }
 
     const [dataVacina, setDataVacina] = useState('');
-    const [vacina, setVacina] = useState('');
-    const [genero, setDose] = useState('');
-    // const [dataVacina, setDataVacina] = useState('');
+    const [nome, setNome] = useState('');
+    const [checked, setChecked] = useState('');
+    const [proxVacina, setProxVacina] = useState('');
     const [comprovante, setComprovante] = useState('');
-    const [senha, setSenha] = useState('');
+    const theme = Appearance.getColorScheme()
 
     const goToHome = () => {
         props.navigation.navigate('Home');
+    }
+
+    function comprovanteVacina() {
+        launchImageLibrary({ noData: true }, (response) => {
+            if (response) {
+                if (response.didCancel !== true) {
+                    setComprovante(response.assets[0].src);
+                    console.log(response.assets[0])
+                }
+            }
+        });
     }
 
     return (
@@ -28,11 +58,11 @@ const NovaVacina = (props) => {
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data de vacinação </Text>
-                        <TextInput
+                        <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
                             value={dataVacina}
                             onChangeText={setDataVacina}
-                            placeholderTextColor="#419ED7"
+                            mask={Masks.DATE_DDMMYYYY}
                         />
                     </View> 
 
@@ -40,8 +70,8 @@ const NovaVacina = (props) => {
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Vacina </Text>
                         <TextInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                            value={vacina}
-                            onChangeText={setVacina}
+                            value={nome}
+                            onChangeText={setNome}
                             placeholderTextColor="#419ED7"
                         />
                     </View>
@@ -55,48 +85,48 @@ const NovaVacina = (props) => {
                         <View style={theme == 'light' ? estilo.light.containerRadio : estilo.dark.containerRadio}>
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="masculino"
+                                    value="1a Dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'masculino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('masculino')}
+                                    status={checked === '1a Dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('1a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>1a. dose</Text>
                             </View>
 
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="masculino"
+                                    value="2a Dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'masculino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('masculino')}
+                                    status={checked === '2a Dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('2a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>2a. dose</Text>
                             </View>
 
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="masculino"
+                                    value="3a Dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'masculino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('masculino')}
+                                    status={checked === '1a Dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('3a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>3a. dose</Text>
                             </View>
 
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="feminino"
+                                    value="Dose única"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'feminino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('feminino')}
+                                    status={checked === 'Dose única' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('Dose única')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>Dose única</Text>
                             </View>
@@ -105,22 +135,28 @@ const NovaVacina = (props) => {
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Comprovante </Text>
-                        <TextInput
-                            style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                            value={comprovante}
-                            onChangeText={setComprovante}
-                            placeholderTextColor="#419ED7"
-                        />
+                        
+                        <View>
+                        <TouchableOpacity>
+                                <Text>Selecionar imagem...</Text>
+                            </TouchableOpacity>
+                            {
+                                (comprovanteVacina != '') ?
+                                    <Image/>
+                                :
+                                setComprovante() && <Image style={{ marginTop: 20, width: 200, height: 100 }}/>
+                            }
+                        </View>
                     </View> 
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Próxima vacina </Text>
                         {/* <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                            value={dataVacina}
-                            onChangeText={setDataVacina}
-                            // mask={Masks.DATE_DDMMYYYY}
-                        /> */}
+                            value={proxVacina}
+                            onChangeText={setProxVacina}
+                            mask={Masks.DATE_DDMMYYYY}
+                        />  */}
                     </View> 
                 
                     <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>

@@ -1,22 +1,47 @@
 import { View, Text, Image, TouchableOpacity, Appearance, Modal } from "react-native";
 import { estilo } from './css/EditarVacina_sty.js'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {TextInput, RadioButton } from 'react-native-paper';
+// import MaskInput, { Masks } from 'react-native-mask-input';
 
 const EditarVacina = (props) => {
 
-    const theme = Appearance.getColorScheme()
+    function excluir() {
+        setModalVisible(!modalVisible)
+        props.navigation.navigate('Minhas Vacinas', {idApagar: id})
+    }
 
-    const [dataVacina, setDataVacina] = useState('');
-    const [vacina, setVacina] = useState('');
-    const [genero, setDose] = useState('');
-    // const [dataVacina, setDataVacina] = useState('');
-    const [comprovante, setComprovante] = useState('');
+    function editar() {
+        props.navigation.navigate('Minhas Vacinas', {
+            itemEditar: {
+                id: id,
+                nome: nome,
+                dataAplicacao: dataVacina,
+                dose: checked,
+                proximaAplicacao: proxVacina,
+                comprovante: comprovante,
+            }
+        })
+    }
+    const theme = Appearance.getColorScheme()
     const [modalVisible, setModalVisible] = useState(false);
 
-    const goToHome = () => {
-       
-    }
+    const [dataVacina, setDataVacina] = useState('');
+    const [nome, setNome] = useState('');
+    const [checked, setChecked] = useState('');
+    const [id, setId] = useState('');
+    const [proxVacina, setProxVacina] = useState('');
+    const [comprovante, setComprovante] = useState('');
+
+    // pega o que tá no props e coloca nos estados - hook react
+    useEffect(() => {
+        setDataVacina(props.route.params.item.dataVacina)
+        setNome(props.route.params.item.nome)
+        setChecked(props.route.params.item.checked)
+        setId(props.route.params.item.id)
+        setProxVacina(props.route.params.item.proxVacina)
+        setComprovante(props.route.params.item.comprovante)
+    })
 
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
@@ -40,8 +65,8 @@ const EditarVacina = (props) => {
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Vacina </Text>
                         <TextInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                            value={vacina}
-                            onChangeText={setVacina}
+                            value={nome}
+                            onChangeText={setNome}
                             placeholderTextColor="#419ED7"
                         />
                     </View>
@@ -55,48 +80,48 @@ const EditarVacina = (props) => {
                         <View style={theme == 'light' ? estilo.light.containerRadio : estilo.dark.containerRadio}>
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="masculino"
+                                    value="1a. dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'masculino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('masculino')}
+                                    status={genero === '1a. dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('1a. dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>1a. dose</Text>
                             </View>
 
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="masculino"
+                                    value="2a. dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'masculino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('masculino')}
+                                    status={genero === '2a. dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('2a. dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>2a. dose</Text>
                             </View>
 
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="masculino"
+                                    value="3a. dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'masculino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('masculino')}
+                                    status={genero === '3a. dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('3a. dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>3a. dose</Text>
                             </View>
 
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                 <RadioButton
-                                    value="feminino"
+                                    value="Dose única"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={genero === 'feminino' ? 'checked' : 'unchecked'}
-                                    onPress={() => setDose('feminino')}
+                                    status={genero === 'Dose única' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('Dose única')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>Dose única</Text>
                             </View>
@@ -105,25 +130,32 @@ const EditarVacina = (props) => {
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Comprovante </Text>
-                        <TextInput
-                            style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                            value={comprovante}
-                            onChangeText={setComprovante}
-                            placeholderTextColor="#419ED7"
-                        />
+                        
+                        <View>
+                            <TouchableOpacity>
+                                <Text>Selecionar imagem...</Text>
+                            </TouchableOpacity>
+                            {
+                                (comprovante != '') ?
+                                    <Image/>
+                                :
+                                setComprovante() && <Image style={{ marginTop: 20, width: 200, height: 100 }}/>
+                            }
+                        </View>
                     </View> 
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Próxima vacina </Text>
                         {/* <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                            value={dataVacina}
-                            onChangeText={setDataVacina}
-                            // mask={Masks.DATE_DDMMYYYY}
-                        /> */}
+                            value={proxVacina}
+                            onChangeText={setProxVacina}
+                            mask={Masks.DATE_DDMMYYYY}
+                        />  */}
                     </View> 
                 
-                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
+                    
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => editar()}> 
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={goToHome}>Salvar alterações</Text>
                     </TouchableOpacity>
 
@@ -146,7 +178,7 @@ const EditarVacina = (props) => {
                                 <View style={theme == 'light' ? estilo.light.modalButtons : estilo.dark.modalButtons}>
                                     <TouchableOpacity
                                         style={[theme == 'light' ? estilo.light.buttonSim : estilo.dark.buttonSim]}
-                                        onPress={() => excluirVacina(id)}>
+                                        onPress={() => excluir(id)}>
                                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>SIM</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity

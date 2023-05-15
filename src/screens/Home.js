@@ -7,6 +7,8 @@ import Vacina from '../../components/CardVacina.js';
 
 const Home = (props) => {
 
+    const [vacinas, setVacinas] = useState([])
+
     const listaVacinas = [
         {
             id: 1,
@@ -43,6 +45,34 @@ const Home = (props) => {
         
 
     ]
+    // lógica do CRUD
+    if (typeof props.route.params !== 'undefined') {
+        if (typeof props.route.params.itemAdicionar !== 'undefined') {
+            vacinas.push({
+                id: props.route.params.itemAdicionar.id,
+                nome: props.route.params.itemAdicionar.nome,
+                dataAplicacao: props.route.params.itemAdicionar.dataVacina,
+                dose: props.route.params.itemAdicionar.checked,
+                proximaAplicacao: props.route.params.itemAdicionar.proxVacina,
+                comprovante: props.route.params.itemAdicionar.comprovante,
+            })
+        }
+        if (typeof props.route.params.itemEditar !== 'undefined') {
+            var index = vacinas.findIndex((item) => item.id == props.route.params.itemEditar.id)
+            if(index !== -1) {
+                let a = vacinas.splice();
+                a[index] = props.route.params.itemEditar;
+                setVacinas(a);
+                props.route.params.itemEditar = 'undefined';
+            }
+        }
+        if (typeof props.route.params.idApagar !== 'undefined') {
+            var index = vacinas.findIndex((item) => item.id == props.route.params.idApagar.id)
+            if(index !== -1) {
+                vacinas.splice(index, 1);
+            }
+        }
+    }
 
     const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()
@@ -69,7 +99,7 @@ const Home = (props) => {
 
                 <View style={theme == 'light' ? estilo.light.main : estilo.dark.main}>
 
-                    <FlatList data={listaVacinas} renderItem={ ({ item }) => <Vacina item={item} navigation={props.navigation} /> } keyExtractor={item => item.id} numColumns={2} extraData={props.navigation}/>
+                    <FlatList data={vacinas} renderItem={ ({ item }) => <Vacina item={item} navigation={props.navigation} /> } keyExtractor={item => item.id} numColumns={2} />
 
                     <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={goToNovaVacina}>Nova Vacina</Text>
