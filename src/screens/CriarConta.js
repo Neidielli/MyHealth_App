@@ -3,6 +3,8 @@ import { estilo } from './css/CriarConta_sty.js'
 import { useState } from 'react'
 import { RadioButton, TextInput } from 'react-native-paper';
 // import MaskInput from 'react-native-mask-input';
+import { auth } from '../firebase/config.js';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const CriarConta = (props) => {
 
@@ -16,12 +18,22 @@ const CriarConta = (props) => {
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [showIncorrectPassword, setShowIncorrectPassword] = useState(false);
 
-    const cadastro = () => {
-        if (senha !== confirmarSenha) {
-            setShowIncorrectPassword(true);
-            return;
-        }
-        props.navigation.navigate('Login');
+    const cadastrar = () => {
+
+        createUserWithEmailAndPassword(auth, email, senha)
+        .then((user) => {
+            // chamado para a criação de documento com os dados do usuario no firestore
+            console.log("Usuário criado com sucesso: " + JSON.stringify(user))
+            props.navigation.navigate('Login');
+        })
+        .catch((error) => {
+            console.log("Erro ao cadastrar usuário: " + JSON.stringify(error))
+        })
+        // if (senha !== confirmarSenha) {
+        //     setShowIncorrectPassword(true);
+        //     return;
+        // }
+        // props.navigation.navigate('Login');
     }
 
     return (
@@ -120,8 +132,8 @@ const CriarConta = (props) => {
                             {showIncorrectPassword && <Text style={theme == 'light' ? estilo.light.textErro : estilo.dark.textErro}>Senha não confere!</Text>}
                         </View> 
 
-                        <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
-                            <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} onPress={cadastro}>Cadastrar</Text>
+                        <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={cadastrar()}>
+                            <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Cadastrar</Text>
                         </TouchableOpacity>
                 
                     </View>

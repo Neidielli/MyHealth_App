@@ -1,7 +1,9 @@
-import { Button, View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, Appearance } from 'react-native';
+import { Button, View, Text, Image, ImageBackground, TouchableOpacity, Appearance } from 'react-native';
 import { useState } from 'react'
 import { estilo } from './css/Login_sty.js'
 import { ActivityIndicator, MD2Colors, Avatar, HelperText, TextInput } from 'react-native-paper';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/config.js'
 
 const Login = (props) => {
 
@@ -10,10 +12,8 @@ const Login = (props) => {
   const theme = Appearance.getColorScheme()
   const onChangeText = email => setEmail(email)
   const [showInvalidMsg, setShowInvalidMsg] = useState(false);
+  const [isLoading, setLoading] = useState(false)
 
-  // const hasErrors = () => {
-  //   return !email.includes('@');
-  // };
   const goToHome = () => {
     if(!email.includes('@') || password < 8){
       setShowInvalidMsg(true);
@@ -22,11 +22,20 @@ const Login = (props) => {
       props.navigation.navigate('DrawerNavigation', { screen: 'Home' });
     }
   }
-  const goToCriarConta = () => {
-    props.navigation.navigate('CriarConta');
-  }
-  const goToRecuperarSenha = () => {
-    props.navigation.navigate('RecuperarSenha');
+
+  const autenticar = () => {
+    setLoading(true)
+
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userLogged) => {
+      console.log("Logado com sucesso: " + JSON.stringify(userLogged))
+    })
+    .catch((error) => {
+      console.log("Error on login: " + JSON.stringify(error))
+    })
+    .finally(() => {
+      setLoading(false)
+    })
   }
 
   return (
@@ -79,19 +88,28 @@ const Login = (props) => {
         </View> 
 
         <View style={theme == 'light' ? estilo.light.footer : estilo.dark.footer}>
-        <View>
-            <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={goToHome}>
-              <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Entrar</Text>
-            </TouchableOpacity>
+          <View>
+            
+            {
+              isLoading ?
+              <TouchableOpacity title='Autenticando' style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
+                <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Autenticando...</Text>
+              </TouchableOpacity>
+              :
+              <TouchableOpacity title='Entrar' style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => {autenticar()}}>
+                <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Entrar</Text>
+              </TouchableOpacity>
+            }
+            
           </View>
           
           <View>
-            <TouchableOpacity style={theme == 'light' ? estilo.light.secondButton : estilo.dark.secondButton} onPress={goToCriarConta}>
+            <TouchableOpacity style={theme == 'light' ? estilo.light.secondButton : estilo.dark.secondButton} onPress={() => {props.navigation.navigate('CriarConta')}}>
               <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Criar conta</Text>
             </TouchableOpacity>
           </View>
           
-          <TouchableOpacity style={theme == 'light' ? estilo.light.grayButton : estilo.dark.grayButton} onPress={goToRecuperarSenha}>
+          <TouchableOpacity style={theme == 'light' ? estilo.light.grayButton : estilo.dark.grayButton} onPress={() => {props.navigation.navigate('RecuperarSenha')}}>
             <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText} >Esqueci a senha</Text>
           </TouchableOpacity>
         </View>

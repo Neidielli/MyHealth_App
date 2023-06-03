@@ -63,14 +63,14 @@ const Home = (props) => {
         if (typeof props.route.params.itemEditar !== 'undefined') {
             var index = vacinas.findIndex((item) => item.id == props.route.params.itemEditar.id)
             if(index !== -1) {
-                let a = vacinas.splice();
+                let a = vacinas.slice();
                 a[index] = props.route.params.itemEditar;
                 setVacinas(a);
                 props.route.params.itemEditar = 'undefined';
             }
         }
         if (typeof props.route.params.idApagar !== 'undefined') {
-            var index = vacinas.findIndex((item) => item.id == props.route.params.idApagar.id)
+            var index = vacinas.findIndex((item) => item.id == props.route.params.idApagar)
             if(index !== -1) {
                 vacinas.splice(index, 1);
             }

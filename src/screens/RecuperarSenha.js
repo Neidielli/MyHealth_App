@@ -2,6 +2,8 @@ import { View, Text, TouchableOpacity, Appearance } from "react-native";
 import { useState } from 'react'
 import { estilo } from './css/RecuperarSenha_sty.js'
 import { TextInput } from 'react-native-paper';
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase/config.js";
 
 const RecuperarSenha = () => {
 
@@ -9,11 +11,18 @@ const RecuperarSenha = () => {
     const theme = Appearance.getColorScheme()
     const [showInvalidMsg, setShowInvalidMsg] = useState(false);
     const RecuperarSenha = () => {
-        if(!email.includes('@')){
-          setShowInvalidMsg(true);
-        } else {
-          setShowInvalidMsg(false);
-        }
+        sendPasswordResetEmail(auth, email)
+        .then(() => {
+            console.log("Email enviado com sucesso ");
+        })
+        .catch(() => {
+            console.log("Erro ao redefinir: " + JSON.stringify(error))
+        })
+        // if(!email.includes('@')){
+        //   setShowInvalidMsg(true);
+        // } else {
+        //   setShowInvalidMsg(false);
+        // }
     }
 
     return (
