@@ -80,7 +80,7 @@ const Home = (props) => {
     const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()
     const goToNovaVacina = () => {
-        props.navigation.navigate('HomeNavigator', { screen: 'NovaVacina'});
+        props.navigation.navigate('NovaVacina');
     }
     const [searchQuery, setSearchQuery] = useState('');
     const Search = query => setSearchQuery(query);

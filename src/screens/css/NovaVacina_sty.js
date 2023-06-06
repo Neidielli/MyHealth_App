@@ -5,7 +5,7 @@ const estilo = StyleSheet.create({
     light: {
         body: {
            flex: 1,
-           backgroundColor: '#C1E7E3',
+           backgroundColor: '#add4d1',
            height: '100%',
         },
         main: {
@@ -25,13 +25,12 @@ const estilo = StyleSheet.create({
             flexDirection: 'row',
             marginBottom: 20,
             width: '90%',
-            borderColor: '1px solid red',
         },
         radioDiv: {
             flexDirection: 'row',
             marginBottom: 20,
             marginLeft: 20,
-            width: '80%',
+            width: "80%",
             marginLeft: -35,
         },
         textRadio: {
@@ -141,7 +140,7 @@ const estilo = StyleSheet.create({
     dark: {
         body: {
             flex: 100,
-            backgroundColor: '#98B5B2',
+            backgroundColor: '#add4d1',
             height: '100%'
         },
         main: {

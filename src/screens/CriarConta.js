@@ -132,7 +132,7 @@ const CriarConta = (props) => {
                             {showIncorrectPassword && <Text style={theme == 'light' ? estilo.light.textErro : estilo.dark.textErro}>Senha não confere!</Text>}
                         </View> 
 
-                        <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={cadastrar()}>
+                        <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => {cadastrar()}}>
                             <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Cadastrar</Text>
                         </TouchableOpacity>
                 

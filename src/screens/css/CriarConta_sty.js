@@ -5,7 +5,7 @@ const estilo = StyleSheet.create({
     light: {
         body: {
            flex: 1,
-           backgroundColor: '#C1E7E3',
+           backgroundColor: '#add4d1',
            height: '100%',
         },
         main: {
@@ -116,7 +116,7 @@ const estilo = StyleSheet.create({
     dark: {
         body: {
             flex: 1,
-            backgroundColor: '#98B5B2',
+            backgroundColor: '#add4d1',
             height: '100%'
         },
         main: {

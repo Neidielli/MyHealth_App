@@ -36,7 +36,7 @@ const ProximasVacinas = (props) => {
 
     const theme = Appearance.getColorScheme()
     const goToNovaVacina = () => {
-        props.navigation.navigate('HomeNavigator', { screen: 'Nova Vacina'});
+        props.navigation.navigate('NovaVacina');
     }
 
     return (

@@ -29,6 +29,7 @@ const Login = (props) => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userLogged) => {
       console.log("Logado com sucesso: " + JSON.stringify(userLogged))
+      props.navigation.navigate('DrawerNavigation', { screen: 'Home' });
     })
     .catch((error) => {
       console.log("Error on login: " + JSON.stringify(error))
