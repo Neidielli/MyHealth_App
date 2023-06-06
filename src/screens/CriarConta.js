@@ -54,18 +54,15 @@ const CriarConta = (props) => {
                         </View> 
 
                         <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
-                            <View>
-                                <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Gênero </Text>
-                            </View>
+                           
+                            <Text style={theme == 'light' ? estilo.light.textInputGenero : estilo.dark.textInputGenero}>Gênero </Text>
                             
-
                             <View style={theme == 'light' ? estilo.light.containerRadio : estilo.dark.containerRadio}>
                                 <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
                                     <RadioButton
                                         value="masculino"
                                         color="#419ed7"
-                                        uncheckedColor="#fff"
-                                        style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
+                                        uncheckedColor="#fff"                                    
                                         status={genero === 'masculino' ? 'checked' : 'unchecked'}
                                         onPress={() => setGenero('masculino')}
                                     />
@@ -76,8 +73,7 @@ const CriarConta = (props) => {
                                     <RadioButton
                                         value="feminino"
                                         color="#419ed7"
-                                        uncheckedColor="#fff"
-                                        style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
+                                        uncheckedColor="#fff"                                     
                                         status={genero === 'feminino' ? 'checked' : 'unchecked'}
                                         onPress={() => setGenero('feminino')}
                                     />
@@ -88,12 +84,12 @@ const CriarConta = (props) => {
 
                         <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                             <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data nascimento </Text>
-                            {/* <MaskInput
+                            <TextInput
                                 style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                                value={dataVacina}
-                                onChangeText={setDataVacina}
-                                // mask={Masks.DATE_DDMMYYYY}
-                            /> */}
+                                value={nomeCompleto}
+                                onChangeText={setNomeCompleto}
+                                placeholderTextColor="#419ED7"
+                            />
                         </View> 
 
                         <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>

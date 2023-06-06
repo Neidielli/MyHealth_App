@@ -30,9 +30,9 @@ const estilo = StyleSheet.create({
         radioDiv: {
             flexDirection: 'row',
             marginBottom: 20,
-            marginLeft: 20,
-            width: '80%',
-            marginLeft: -35,
+            marginTop: 5,
+            width: '75%',
+            marginLeft: -25,
         },
         textRadio: {
             marginTop: 5,
@@ -69,11 +69,21 @@ const estilo = StyleSheet.create({
             marginLeft: 'auto',
     
         },
+        textInputGenero: {
+            marginTop: 10,
+            marginLeft: 70,
+            marginRight: 17,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+        },
         containerRadio: {
             width: 200,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: -20,
         },
         radio: {
            marginLeft: 25,
@@ -137,6 +147,23 @@ const estilo = StyleSheet.create({
             marginBottom: 20,
             width: '90%',
         },
+        radioDiv: {
+            flexDirection: 'row',
+            marginBottom: 20,
+            marginTop: 5,
+            width: '75%',
+            marginLeft: -25,
+        },
+        textRadio: {
+            marginTop: 5,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+            marginLeft: 0,
+        },
         input: {
             width: 230,
             height: 30,
@@ -162,11 +189,21 @@ const estilo = StyleSheet.create({
             marginLeft: 'auto',
     
         },
+        textInputGenero: {
+            marginTop: 10,
+            marginLeft: 70,
+            marginRight: 17,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+        },
         containerRadio: {
-            width: 252,
+            width: 200,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: -20,   
         },
         textErro: {
             color: "red",

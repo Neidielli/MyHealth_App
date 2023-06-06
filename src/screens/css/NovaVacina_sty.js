@@ -28,10 +28,8 @@ const estilo = StyleSheet.create({
         },
         radioDiv: {
             flexDirection: 'row',
-            marginBottom: 20,
-            marginLeft: 20,
-            width: "80%",
-            marginLeft: -35,
+            marginBottom: -10,
+            
         },
         textRadio: {
             marginTop: 5,
@@ -69,10 +67,11 @@ const estilo = StyleSheet.create({
     
         },
         containerRadio: {
-            width: 200,
+            width: 252,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: -20,
+            flexWrap: "wrap",
+            
         },
         radio: {
            marginLeft: 25,
@@ -161,6 +160,21 @@ const estilo = StyleSheet.create({
             marginBottom: 20,
             width: '90%',
         },
+        radioDiv: {
+            flexDirection: 'row',
+            marginBottom: -10,
+            
+        },
+        textRadio: {
+            marginTop: 5,
+            color: 'white',
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'AveriaLibre-Regular',
+            textShadowOffset: { width: 1, height: 1 },
+            textShadowRadius: 1,
+            marginLeft: 0,
+        },
         input: {
             width: 230,
             height: 30,
@@ -190,7 +204,8 @@ const estilo = StyleSheet.create({
             width: 252,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: -20,   
+            flexWrap: "wrap",
+            
         },
         textErro: {
             color: "red",

@@ -79,10 +79,8 @@ const NovaVacina = (props) => {
                     </View>
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
-                        <View>
-                            <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Dose </Text>
-                        </View>
-                        
+                
+                        <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Dose </Text>   
 
                         <View style={theme == 'light' ? estilo.light.containerRadio : estilo.dark.containerRadio}>
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
@@ -90,7 +88,7 @@ const NovaVacina = (props) => {
                                     value="1a Dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
-                                    style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
+                                    
                                     status={checked === '1a Dose' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('1a Dose')}
                                 />
@@ -102,7 +100,7 @@ const NovaVacina = (props) => {
                                     value="2a Dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
-                                    style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
+                                    
                                     status={checked === '2a Dose' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('2a Dose')}
                                 />
@@ -114,8 +112,8 @@ const NovaVacina = (props) => {
                                     value="3a Dose"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
-                                    style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={checked === '1a Dose' ? 'checked' : 'unchecked'}
+                                    
+                                    status={checked === '3a Dose' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('3a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>3a. dose</Text>
@@ -126,7 +124,7 @@ const NovaVacina = (props) => {
                                     value="Dose única"
                                     color="#419ed7"
                                     uncheckedColor="#fff"
-                                    style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
+                                   
                                     status={checked === 'Dose única' ? 'checked' : 'unchecked'}
                                     onPress={() => setChecked('Dose única')}
                                 />
