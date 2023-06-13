@@ -5,26 +5,28 @@ import { TextInput, RadioButton } from 'react-native-paper';
 import  v4  from 'uuid';
 import { launchImageLibrary } from 'react-native-image-picker'
 import MaskInput, { Masks } from 'react-native-mask-input';
+import { addDoc, collection, setDoc, doc } from "firebase/firestore";
+import { db } from "../firebase/config.js";
 
 
 const NovaVacina = (props) => {
 
-    function novaVacina() {
-        props.navigation.navigate('Home', {
-            itemAdicionar: {
-                id: v4,
-                nome: nome,
-                dataAplicacao: dataVacina,
-                dose: checked,
-                proximaAplicacao: proxVacina,
-                comprovante: comprovanteVacina,
-            }
-        })
-        setDataVacina('')
-        setProxVacina('')
-        setNome('')
-        setChecked('')
-    }
+    // function novaVacina() {
+    //     props.navigation.navigate('Home', {
+    //         itemAdicionar: {
+    //             id: v4,
+    //             nome: nome,
+    //             dataAplicacao: dataVacina,
+    //             dose: checked,
+    //             proximaAplicacao: proxVacina,
+    //             comprovante: comprovanteVacina,
+    //         }
+    //     })
+    //     setDataVacina('')
+    //     setProxVacina('')
+    //     setNome('')
+    //     setChecked('')
+    // }
 
     const [dataVacina, setDataVacina] = useState('');
     const [nome, setNome] = useState('');
@@ -32,8 +34,32 @@ const NovaVacina = (props) => {
     const [proxVacina, setProxVacina] = useState('');
     const [comprovante, setComprovante] = useState('');
     const theme = Appearance.getColorScheme()
+    const cleanStates = () =>{
+        setDataVacina('')
+        setProxVacina('')
+        setNome('')
+        setChecked('')
+    }
 
-    
+    const cadastrar = () => {
+        const colecao = collection(db, "vacinas");
+        const documento = {
+            dataVacina: dataVacina,
+            vacina: nome,
+            dose: checked,
+            comprovante: comprovante,
+            proxVacina: proxVacina
+        }
+
+        addDoc(colecao, documento)
+            .then((refDoc) => {
+                console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
+                cleanStates()
+            })
+            .catch((error) => {
+                console.log("Error: " + JSON.stringify(error))
+            })
+    }
 
     const goToHome = () => {
         props.navigation.navigate('Home');
@@ -159,7 +185,7 @@ const NovaVacina = (props) => {
                         /> 
                     </View> 
                 
-                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={novaVacina}>
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={cadastrar}>
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
 
