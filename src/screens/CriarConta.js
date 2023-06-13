@@ -2,9 +2,10 @@ import { Text, View, TouchableOpacity, Appearance } from 'react-native';
 import { estilo } from './css/CriarConta_sty.js'
 import { useState } from 'react'
 import { RadioButton, TextInput } from 'react-native-paper';
-// import MaskInput from 'react-native-mask-input';
 import { auth } from '../firebase/config.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection, setDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase/config.js';
 
 const CriarConta = (props) => {
 
@@ -12,23 +13,52 @@ const CriarConta = (props) => {
 
     const [nomeCompleto, setNomeCompleto] = useState('');
     const [genero, setGenero] = useState('');
-    const [dataVacina, setDataVacina] = useState('');
+    const [dataNasc, setDataNasc] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [showIncorrectPassword, setShowIncorrectPassword] = useState(false);
+    const cleanStates = () =>{
+        setNomeCompleto('')
+        setGenero('')
+        setDataNasc('')
+        setEmail('')
+        setSenha('')
+        setConfirmarSenha('')
+    }
 
     const cadastrar = () => {
 
-        createUserWithEmailAndPassword(auth, email, senha)
-        .then((user) => {
-            // chamado para a criação de documento com os dados do usuario no firestore
-            console.log("Usuário criado com sucesso: " + JSON.stringify(user))
-            props.navigation.navigate('Login');
-        })
-        .catch((error) => {
-            console.log("Erro ao cadastrar usuário: " + JSON.stringify(error))
-        })
+        const colecao = collection(db, "usuarios");
+        const documento = {
+            nome: nomeCompleto,
+            genero: genero,
+            dataNascimento: dataNasc,
+            email: email,
+            senha: senha,
+        }
+
+        // const refDoc = doc(db, UUID)
+        // setDoc()
+
+        addDoc(colecao, documento)
+            .then((refDoc) => {
+                console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
+                cleanStates()
+            })
+            .catch((error) => {
+                console.log("Error: " + JSON.stringify(error))
+            })
+
+        // createUserWithEmailAndPassword(auth, email, senha)
+        // .then((user) => {
+        //     // chamado para a criação de documento com os dados do usuario no firestore
+        //     console.log("Usuário criado com sucesso: " + JSON.stringify(user))
+        //     props.navigation.navigate('Login');
+        // })
+        // .catch((error) => {
+        //     console.log("Erro ao cadastrar usuário: " + JSON.stringify(error))
+        // })
         // if (senha !== confirmarSenha) {
         //     setShowIncorrectPassword(true);
         //     return;
@@ -86,8 +116,8 @@ const CriarConta = (props) => {
                             <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data nascimento </Text>
                             <TextInput
                                 style={theme == 'light' ? estilo.light.input : estilo.dark.input}
-                                value={nomeCompleto}
-                                onChangeText={setNomeCompleto}
+                                value={dataNasc}
+                                onChangeText={setDataNasc}
                                 placeholderTextColor="#419ED7"
                             />
                         </View> 

@@ -93,9 +93,7 @@ const Login = (props) => {
             
             {
               isLoading ?
-              <TouchableOpacity title='Autenticando' style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton}>
-                <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Autenticando...</Text>
-              </TouchableOpacity>
+              <ActivityIndicator color='#ffffff' size={50}/>
               :
               <TouchableOpacity title='Entrar' style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => {autenticar()}}>
                 <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Entrar</Text>
