@@ -85,7 +85,7 @@ const NovaVacina = (props) => {
                 <View style={theme == 'light' ? estilo.light.inputGroup : estilo.dark.inputGroup}>
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
-                        <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data de vacinação </Text>
+                        <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data da vacina </Text>
                         <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
                             value={dataVacina}

@@ -9,13 +9,13 @@ const Vacina = (props) => {
     return (
         <TouchableOpacity style={styles.container} onPress={gotoEditar}>
         
-            <Text style={styles.nome}>{props.item.nome}</Text>
+            <Text style={styles.nome}>{props.item.vacina}</Text>
             <Text style={styles.dose}>{props.item.dose}</Text>
-            <Text style={styles.dataDose}>{props.item.dataAplicacao}</Text>
+            <Text style={styles.dataDose}>{props.item.dataVacina}</Text>
             
             <Image source={props.item.comprovante} style={{ width: 165, height: 60, marginLeft: 'auto', marginRight: 'auto' }} />
-            {(props.item.proximaAplicacao != '') ? 
-                <Text style={styles.proxDose}>Proxima dose: </Text>
+            {(props.item.proxVacina != '') ? 
+                <Text style={styles.proxDose}>Proxima dose: {props.item.proxVacina}</Text>
                 :
                 <Text style={styles.proxDose}>Não há próxima dose</Text>
             }
