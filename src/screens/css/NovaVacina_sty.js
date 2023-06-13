@@ -15,6 +15,7 @@ const estilo = StyleSheet.create({
         },
         inputGroup: {
             marginTop: 45,
+            marginLeft: 20,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -28,7 +29,7 @@ const estilo = StyleSheet.create({
         },
         radioDiv: {
             flexDirection: 'row',
-            marginBottom: -10,
+            marginBottom: 1,
             
         },
         textRadio: {
@@ -42,8 +43,8 @@ const estilo = StyleSheet.create({
             marginLeft: 0,
         },
         input: {
-            width: 230,
-            height: 30,
+            width: 220,
+            height: 35,
             fontSize: 20,
             color: '#3F92C5',
             borderColor: 'white',
@@ -67,11 +68,10 @@ const estilo = StyleSheet.create({
     
         },
         containerRadio: {
-            width: 252,
+            width: 220,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            flexWrap: "wrap",
-            
+            flexWrap: "wrap", 
         },
         radio: {
            marginLeft: 25,
@@ -93,7 +93,7 @@ const estilo = StyleSheet.create({
     
         },
         containerImagem: {
-            width: 249,
+            width: 220,
             textAlign: 'center',
             flexDirection: 'column',
             color: 'white',
@@ -147,8 +147,9 @@ const estilo = StyleSheet.create({
             alignItems: 'center',
             paddingTop: 70,
         },
-        inputsGroup: {
+        inputGroup: {
             marginTop: 45,
+            marginLeft: 20,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -201,11 +202,10 @@ const estilo = StyleSheet.create({
     
         },
         containerRadio: {
-            width: 252,
+            width: 220,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            flexWrap: "wrap",
-            
+            flexWrap: "wrap", 
         },
         textErro: {
             color: "red",
@@ -223,7 +223,7 @@ const estilo = StyleSheet.create({
             marginTop: 10,
         },
         containerImagem: {
-            width: 249,
+            width: 220,
             textAlign: 'center',
             flexDirection: 'column',
             color: 'white',

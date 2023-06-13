@@ -6,6 +6,7 @@ import { auth } from '../firebase/config.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { addDoc, collection, setDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase/config.js';
+import MaskInput, { Masks } from 'react-native-mask-input';
 
 const CriarConta = (props) => {
 
@@ -114,11 +115,12 @@ const CriarConta = (props) => {
 
                         <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                             <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data nascimento </Text>
-                            <TextInput
+                            <MaskInput
                                 style={theme == 'light' ? estilo.light.input : estilo.dark.input}
                                 value={dataNasc}
                                 onChangeText={setDataNasc}
                                 placeholderTextColor="#419ED7"
+                                mask={Masks.DATE_DDMMYYYY}
                             />
                         </View> 
 

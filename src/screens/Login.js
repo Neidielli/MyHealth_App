@@ -78,6 +78,7 @@ const Login = (props) => {
               label="Senha"
               style={theme == 'light' ? estilo.light.input : estilo.dark.input}
               value={password}
+              secureTextEntry={true}
               onChangeText={setPassword}
             />
           </View>
