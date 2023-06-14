@@ -23,7 +23,15 @@ const estilo = StyleSheet.create({
                width: 150,
                marginTop: 5,
                marginBottom: 50,
-               borderRadius: 4,
+               shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 5,
+                },
+                shadowOpacity: 0.5,
+                shadowRadius: 7,
+                elevation: 5,
+                borderRadius: 5,
                borderColor: '#37BD6D',
                alignSelf: 'center'
         },

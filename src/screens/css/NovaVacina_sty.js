@@ -101,13 +101,10 @@ const estilo = StyleSheet.create({
         },
         btnComprovante: {
             backgroundColor: '#419ed7',
-            textAlign: 'center',
-            fontFamily: 'AveriaLibre-Bold',
-            width: 130,
+            width: 220,
+            height: 35,
             padding: 3,
-            color: 'white',
-            fontSize: 12,
-            marginTop: 10,
+            marginTop: 0,
             shadowColor: "#000",
             shadowOffset: {
                 width: 0,
@@ -115,16 +112,32 @@ const estilo = StyleSheet.create({
             },
             shadowOpacity: 0.5,
             shadowRadius: 7,
-            elevation: 15,
+            elevation: 5,
+            borderRadius: 5
+        },
+        txtComprovante: {
+            color: 'white',
+            fontSize: 20,
+            textAlign: 'center',
+            fontFamily: 'AveriaLibre-Regular',
+            marginTop: 0,
         },
         primaryButton: {
-               backgroundColor: '#49B976',
-               height: 50,
-               width: 150,
-               marginTop: 50,
-               borderRadius: 4,
-               borderColor: '#37BD6D',
-               alignSelf: 'center'
+                backgroundColor: '#49B976',
+                height: 50,
+                width: 250,
+                marginTop: 50,
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 5,
+                },
+                shadowOpacity: 0.5,
+                shadowRadius: 7,
+                elevation: 5,
+                borderRadius: 5,
+                borderColor: '#37BD6D',
+                alignSelf: 'center'
         },
         buttonText: {
                marginTop: 5,
