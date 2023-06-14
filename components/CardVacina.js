@@ -2,8 +2,10 @@ import {View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 
 const Vacina = (props) => {
 
+    const idDocumento = props.id
+
     const gotoEditar = () => {
-        props.navigation.navigate('EditarVacina', {item: props.item})
+        props.navigation.navigate('EditarVacina', {id: idDocumento, vacina: props.item.vacina, checked: props.item.dose, dataVacina: props.item.dataVacina, comprovante: props.item.urlComprovante, proxVacina: props.item.proxVacina})
     }
 
     return (
@@ -12,8 +14,14 @@ const Vacina = (props) => {
             <Text style={styles.nome}>{props.item.vacina}</Text>
             <Text style={styles.dose}>{props.item.dose}</Text>
             <Text style={styles.dataDose}>{props.item.dataVacina}</Text>
+
+            {
+                props.item.urlComprovante ?
+                    <Image source={{ uri: props.item.urlComprovante }} style={{ width: 165, height: 60, marginLeft: 'auto', marginRight: 'auto' }} />
+                    :
+                    null
+            }
             
-            <Image source={props.item.comprovante} style={{ width: 165, height: 60, marginLeft: 'auto', marginRight: 'auto' }} />
             {(props.item.proxVacina != '') ? 
                 <Text style={styles.proxDose}>Proxima dose: {props.item.proxVacina}</Text>
                 :

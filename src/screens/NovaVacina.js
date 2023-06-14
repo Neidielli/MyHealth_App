@@ -1,39 +1,26 @@
 import { View, Text, TouchableOpacity, Appearance, Image } from "react-native";
+import { TextInput, RadioButton } from 'react-native-paper';
 import { estilo } from './css/NovaVacina_sty.js'
 import { useState } from "react";
-import { TextInput, RadioButton } from 'react-native-paper';
-import  v4  from 'uuid';
-import { launchImageLibrary } from 'react-native-image-picker'
+
+import { launchCamera } from 'react-native-image-picker'
+import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import MaskInput, { Masks } from 'react-native-mask-input';
+
 import { addDoc, collection, setDoc, doc } from "firebase/firestore";
-import { db } from "../firebase/config.js";
+import { db, storage } from "../firebase/config.js";
 
 
 const NovaVacina = (props) => {
-
-    // function novaVacina() {
-    //     props.navigation.navigate('Home', {
-    //         itemAdicionar: {
-    //             id: v4,
-    //             nome: nome,
-    //             dataAplicacao: dataVacina,
-    //             dose: checked,
-    //             proximaAplicacao: proxVacina,
-    //             comprovante: comprovanteVacina,
-    //         }
-    //     })
-    //     setDataVacina('')
-    //     setProxVacina('')
-    //     setNome('')
-    //     setChecked('')
-    // }
 
     const [dataVacina, setDataVacina] = useState('');
     const [nome, setNome] = useState('');
     const [checked, setChecked] = useState('');
     const [proxVacina, setProxVacina] = useState('');
-    const [comprovante, setComprovante] = useState('');
+    const [comprovante, setComprovante] = useState();
+    const [urlComprovante, setUrlComprovante] = useState('');
     const theme = Appearance.getColorScheme()
+
     const cleanStates = () =>{
         setDataVacina('')
         setProxVacina('')
@@ -41,39 +28,54 @@ const NovaVacina = (props) => {
         setChecked('')
     }
 
-    const cadastrar = () => {
+    const cadastrar = async () => {
         const colecao = collection(db, "vacinas");
-        const documento = {
-            dataVacina: dataVacina,
-            vacina: nome,
-            dose: checked,
-            comprovante: comprovante,
-            proxVacina: proxVacina
-        }
 
-        addDoc(colecao, documento)
-            .then((refDoc) => {
-                console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
-                cleanStates()
+        const imageRef = ref(storage, "images/vacina.jpg")
+
+        const file = await fetch(urlComprovante)
+        const blob = await file.blob()
+
+        uploadBytes(imageRef, blob, { contentType: 'image/jpeg' })
+            .then((result) => {
+                console.log("Arquivo enviado com sucesso.")
+                getDownloadURL(imageRef)
+                    .then((url) => {
+                        const documento = {
+                            dataVacina: dataVacina,
+                            vacina: nome,
+                            dose: checked,
+                            urlComprovante: url,
+                            proxVacina: proxVacina
+                        }
+        
+                        addDoc(colecao, documento)
+                            .then((refDoc) => {
+                                console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
+                                cleanStates()
+                            })
+                            .catch((error) => {
+                                console.log("Error: " + JSON.stringify(error))
+                            })
+                            props.navigation.navigate('Home');
+                    })
             })
             .catch((error) => {
-                console.log("Error: " + JSON.stringify(error))
+                console.log("Erro ao enviar arquivo: " + JSON.stringify(error))
             })
+               
     }
 
-    const goToHome = () => {
-        props.navigation.navigate('Home');
-    }
+    const comprovanteVacina = () => {
 
-    function comprovanteVacina() {
-        launchImageLibrary({ noData: true }, (response) => {
-            if (response) {
-                if (response.didCancel !== true) {
-                    setComprovante(response.assets[0].src);
-                    console.log(response.assets[0].src)
-                }
-            }
-        });
+       launchCamera({ mediaType: 'photo', cameraType: 'back', quality: 1})
+        .then((result) => {
+            setComprovante(result.assets[0])
+            setUrlComprovante(result.assets[0].uri)
+        })
+        .catch((error) => {
+            console.log("Erro ao capturar imagem: " + JSON.stringify(error))
+        })
     }
 
     return (
@@ -163,14 +165,14 @@ const NovaVacina = (props) => {
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Comprovante </Text>
                         
                         <View style={theme == 'light' ? estilo.light.containerImagem : estilo.dark.containerImagem}>
-                        <TouchableOpacity onPress={() => comprovanteVacina}>
-                                <Text style={theme == 'light' ? estilo.light.btnComprovante : estilo.dark.btnComprovante}>Selecionar imagem...</Text>
+                            <TouchableOpacity style={theme == 'light' ? estilo.light.btnComprovante : estilo.dark.btnComprovante} onPress={() => comprovanteVacina()}>
+                                <Text style={theme == 'light' ? estilo.light.txtComprovante : estilo.dark.txtComprovante}>Selecionar imagem</Text>
                             </TouchableOpacity>
                             {
-                                (comprovanteVacina != '') ?
-                                    <Image source={{src: comprovante}}/>
-                                :
-                                setComprovante(require('../../assets/images/sair.png')) && <Image  source={{src: comprovante}} style={{ marginTop: 20, width: 200, height: 100 }}/>
+                                urlComprovante ?
+                                    <Image source={{ uri: urlComprovante }} style={{ height: 100, width: 100 }} />
+                                    :
+                                    null
                             }
                         </View>
                     </View> 

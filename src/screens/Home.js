@@ -20,30 +20,6 @@ const Home = (props) => {
     //         comprovante: require('../../assets/images/sair.png'),
     //         proximaAplicacao: '19/09/2024'  
     //     },
-    //     {
-    //         id: 2,
-    //         nome: 'H1N1',
-    //         dataAplicacao: '19/09/2020',
-    //         dose: 3,
-    //         comprovante: require('../../assets/images/sair.png'),
-    //         proximaAplicacao: '19/09/2024'
-    //     },
-    //     {
-    //         id: 3,
-    //         nome: 'Sarampo',
-    //         dataAplicacao: '01/03/2020',
-    //         dose: 1,
-    //         comprovante: require('../../assets/images/sair.png'),
-    //         proximaAplicacao: '19/12/2024'
-    //     },
-    //     {
-    //         id: 4,
-    //         nome: 'Covid',
-    //         dataAplicacao: '19/09/2020',
-    //         dose: 1,
-    //         comprovante: require('../../assets/images/sair.png'),
-    //         proximaAplicacao: null
-    //     },
 
     // ]
 
@@ -90,17 +66,17 @@ const Home = (props) => {
 
     useEffect(() => {
         const q = query(collection(db, "vacinas"))
-        var vacinas = []
 
         onSnapshot(q, (snapshot) => {
-            vacinas = []; // limpa o array
+            const vacinas = []; // limpa o array
+            
             snapshot.forEach((doc) => {
                 vacinas.push({
                     id: doc.id,
                     dataVacina: doc.data().dataVacina,
                     vacina: doc.data().vacina,
                     dose: doc.data().dose,
-                    comprovante: doc.data().comprovante,
+                    urlComprovante: doc.data().urlComprovante,
                     proxVacina: doc.data().proxVacina
                 })
                 console.log("Documento: " + JSON.stringify(doc.data()))
@@ -127,7 +103,7 @@ const Home = (props) => {
 
                 <View style={theme == 'light' ? estilo.light.main : estilo.dark.main}>
 
-                    <FlatList data={listaVacinas} renderItem={ ({ item }) => <Vacina item={item} navigation={props.navigation} /> } keyExtractor={item => item.id} numColumns={2} />
+                    <FlatList extraData={listaVacinas} data={listaVacinas} renderItem={ ({ item }) => <Vacina item={item} navigation={props.navigation} /> } keyExtractor={item => item.id} numColumns={2} />
 
                     <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={goToNovaVacina}>
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Nova Vacina</Text>

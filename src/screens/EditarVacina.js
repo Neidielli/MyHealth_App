@@ -1,28 +1,17 @@
 import { View, Text, Image, TouchableOpacity, Appearance, Modal } from "react-native";
 import { estilo } from './css/EditarVacina_sty.js'
 import { useEffect, useState } from "react";
+
 import {TextInput, RadioButton } from 'react-native-paper';
 import MaskInput, { Masks } from 'react-native-mask-input';
 
+import { updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { launchCamera } from "react-native-image-picker";
+import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
+import { db, storage } from "../firebase/config.js";
+
 const EditarVacina = (props) => {
 
-    function excluir() {
-        setModalVisible(!modalVisible)
-        props.navigation.navigate('Home', {idApagar: id})
-    }
-
-    function editar() {
-        props.navigation.navigate('Home', {
-            itemEditar: {
-                id: id,
-                nome: nome,
-                dataAplicacao: dataVacina,
-                dose: checked,
-                proximaAplicacao: proxVacina,
-                comprovante: comprovante,
-            }
-        })
-    }
     const theme = Appearance.getColorScheme()
     const [modalVisible, setModalVisible] = useState(false);
 
@@ -31,17 +20,84 @@ const EditarVacina = (props) => {
     const [checked, setChecked] = useState('');
     const [id, setId] = useState('');
     const [proxVacina, setProxVacina] = useState('');
-    const [comprovante, setComprovante] = useState('');
+    const [comprovante, setComprovante] = useState();
+    const [urlComprovante, setUrlComprovante] = useState('');
 
     // pega o que tá no props e coloca nos estados - hook react
     useEffect(() => {
-        setDataVacina(props.route.params.item.dataVacina)
-        setNome(props.route.params.item.nome)
-        setChecked(props.route.params.item.checked)
-        setId(props.route.params.item.id)
-        setProxVacina(props.route.params.item.proxVacina)
-        setComprovante(props.route.params.item.comprovante)
-    })
+        setDataVacina(props.route.params.dataVacina)
+        setNome(props.route.params.vacina)
+        setChecked(props.route.params.checked)
+        setId(props.route.params.id)
+        setProxVacina(props.route.params.proxVacina)
+        setUrlComprovante(props.route.params.urlComprovante)
+    }, [])
+
+    const comprovanteVacina = () => {
+
+        launchCamera({ mediaType: 'photo', cameraType: 'back', quality: 1})
+         .then((result) => {
+             setComprovante(result.assets[0])
+             setUrlComprovante(result.assets[0].uri)
+         })
+         .catch((error) => {
+             console.log("Erro ao capturar imagem: " + JSON.stringify(error))
+         })
+    }
+
+    const excluir = () => {
+        const idDocumento = props.route.params.id
+
+        const refDoc = doc(db, "vacinas", idDocumento)
+
+        deleteDoc(refDoc)
+            .then(() =>{
+                console.log("Documento excluido com sucesso!")
+                props.navigation.pop()
+            })
+            .catch((error) => {
+                console.log("Erro ao excluir o documento: " + error)
+            })
+    }
+
+    const salvarAlteracoes = async () => {
+        const idDocumento = props.route.params.id
+
+        const refDoc = doc(db, "vacinas", idDocumento)
+
+        const imageRef = ref(storage, "images/vacina.jpg")
+
+        const file = await fetch(urlComprovante)
+        const  blob = await file.blob()
+
+        uploadBytes(imageRef, blob, { contentType: 'image/jpeg' })
+            .then((result) => {
+                console.log("Arquivo enviado com sucesso.")
+                getDownloadURL(imageRef)
+                    .then((url) => {
+                        updateDoc(refDoc, {
+                            dataVacina: dataVacina,
+                            vacina: vacina,
+                            dose: dose,
+                            urlComprovante: url,
+                            proxVacina: proxVacina
+                        })
+                            .then(() => {
+                                console.log("Documento atualizado com sucesso!!")
+                                props.navigation.pop()
+                            })
+                            .catch((error) => {
+                                console.log("Erro ao atualizar o documento: " + JSON.stringify(error))
+                            })
+                    })
+                    .catch((error) => {
+                        console.log("Erro ao pegar a URL da imagem: " + JSON.stringify(error))
+                    })
+            })
+            .catch((error) => {
+                console.log("Erro ao enviar o arquivo: " + JSON.stringify(error))
+            })
+    }
 
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
@@ -52,13 +108,13 @@ const EditarVacina = (props) => {
                 <View style={theme == 'light' ? estilo.light.inputGroup : estilo.dark.inputGroup}>
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
-                        <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data de vacinação </Text>
-                        <TextInput
+                        <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Data da vacina </Text>
+                        <MaskInput
                             style={theme == 'light' ? estilo.light.input : estilo.dark.input}
                             value={dataVacina}
                             onChangeText={setDataVacina}
-                            placeholderTextColor="#419ED7"
-                        />
+                            mask={Masks.DATE_DDMMYYYY}
+                        /> 
                     </View> 
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
@@ -72,10 +128,8 @@ const EditarVacina = (props) => {
                     </View>
 
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
-                        <View>
-                            <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Dose </Text>
-                        </View>
                         
+                        <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Dose </Text>
 
                         <View style={theme == 'light' ? estilo.light.containerRadio : estilo.dark.containerRadio}>
                             <View style={theme == 'light' ? estilo.light.radioDiv : estilo.dark.radioDiv}>
@@ -84,8 +138,8 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={checked === '1a. dose' ? 'checked' : 'unchecked'}
-                                    onPress={() => setChecked('1a. dose')}
+                                    status={checked === '1a Dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('1a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>1a. dose</Text>
                             </View>
@@ -96,8 +150,8 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={checked === '2a. dose' ? 'checked' : 'unchecked'}
-                                    onPress={() => setChecked('2a. dose')}
+                                    status={checked === '2a Dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('2a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>2a. dose</Text>
                             </View>
@@ -108,8 +162,8 @@ const EditarVacina = (props) => {
                                     color="#419ed7"
                                     uncheckedColor="#fff"
                                     style={theme == 'light' ? estilo.light.radio : estilo.dark.radio}
-                                    status={checked === '3a. dose' ? 'checked' : 'unchecked'}
-                                    onPress={() => setChecked('3a. dose')}
+                                    status={checked === '3a Dose' ? 'checked' : 'unchecked'}
+                                    onPress={() => setChecked('3a Dose')}
                                 />
                                 <Text style={theme == 'light' ? estilo.light.textRadio : estilo.dark.textRadio}>3a. dose</Text>
                             </View>
@@ -131,16 +185,12 @@ const EditarVacina = (props) => {
                     <View style={theme == 'light' ? estilo.light.formDiv : estilo.dark.formDiv}>
                         <Text style={theme == 'light' ? estilo.light.textInput : estilo.dark.textInput}>Comprovante </Text>
                         
-                        <View>
-                            <TouchableOpacity>
-                                <Text>Selecionar imagem...</Text>
+                        <View style={theme == 'light' ? estilo.light.containerImagem : estilo.dark.containerImagem}>
+                            <TouchableOpacity style={theme == 'light' ? estilo.light.btnComprovante : estilo.dark.btnComprovante} onPress={() => comprovanteVacina()}>
+                                <Text style={theme == 'light' ? estilo.light.txtComprovante : estilo.dark.txtComprovante}>Selecionar imagem</Text>
                             </TouchableOpacity>
-                            {
-                                (comprovante != '') ?
-                                    <Image/>
-                                :
-                                setComprovante() && <Image style={{ marginTop: 20, width: 200, height: 100 }}/>
-                            }
+
+                            <Image source={{ uri: urlComprovante }} style={{ width: 100, height: 100 }}/>
                         </View>
                     </View> 
 
@@ -155,7 +205,7 @@ const EditarVacina = (props) => {
                     </View> 
                 
                     
-                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => editar()}> 
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => salvarAlteracoes()}> 
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Salvar alterações</Text>
                     </TouchableOpacity>
 
@@ -178,7 +228,7 @@ const EditarVacina = (props) => {
                                 <View style={theme == 'light' ? estilo.light.modalButtons : estilo.dark.modalButtons}>
                                     <TouchableOpacity
                                         style={[theme == 'light' ? estilo.light.buttonSim : estilo.dark.buttonSim]}
-                                        onPress={() => excluir(id)}>
+                                        onPress={() => excluir()}>
                                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>SIM</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
