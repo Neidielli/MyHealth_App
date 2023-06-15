@@ -11,50 +11,6 @@ const Home = (props) => {
 
      const [vacinas, setVacinas] = useState([])
 
-    // const listaVacinas = [
-    //     {
-    //         id: 1,
-    //         nome: 'BCG',
-    //         dataAplicacao: '19/09/2020',
-    //         dose: 1,
-    //         comprovante: require('../../assets/images/sair.png'),
-    //         proximaAplicacao: '19/09/2024'  
-    //     },
-
-    // ]
-
-    // if (vacinas.length == 0) {
-    //     setVacinas(listaVacinas)
-    // }
-    // // lógica do CRUD
-    // if (typeof props.route.params !== 'undefined') {
-    //     if (typeof props.route.params.itemAdicionar !== 'undefined') {
-    //         vacinas.push({
-    //             id: props.route.params.itemAdicionar.id,
-    //             nome: props.route.params.itemAdicionar.nome,
-    //             dataAplicacao: props.route.params.itemAdicionar.dataVacina,
-    //             dose: props.route.params.itemAdicionar.checked,
-    //             proximaAplicacao: props.route.params.itemAdicionar.proxVacina,
-    //             comprovante: props.route.params.itemAdicionar.comprovante,
-    //         })
-    //     }
-    //     if (typeof props.route.params.itemEditar !== 'undefined') {
-    //         var index = vacinas.findIndex((item) => item.id == props.route.params.itemEditar.id)
-    //         if(index !== -1) {
-    //             let a = vacinas.slice();
-    //             a[index] = props.route.params.itemEditar;
-    //             setVacinas(a);
-    //             props.route.params.itemEditar = 'undefined';
-    //         }
-    //     }
-    //     if (typeof props.route.params.idApagar !== 'undefined') {
-    //         var index = vacinas.findIndex((item) => item.id == props.route.params.idApagar)
-    //         if(index !== -1) {
-    //             vacinas.splice(index, 1);
-    //         }
-    //     }
-    // }
-
     const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()
     const goToNovaVacina = () => {
@@ -103,7 +59,19 @@ const Home = (props) => {
 
                 <View style={theme == 'light' ? estilo.light.main : estilo.dark.main}>
 
-                    <FlatList extraData={listaVacinas} data={listaVacinas} renderItem={ ({ item }) => <Vacina item={item} navigation={props.navigation} /> } keyExtractor={item => item.id} numColumns={2} />
+                    <FlatList style={{ marginTop: -15, marginBottom: 20 }} numColumns={2} extraData={listaVacinas} data={listaVacinas} renderItem={ ({ item }) => {
+                        return <Vacina 
+                            navigation={props.navigation}
+                            id={item.id}
+                            vacina={item.vacina} 
+                            checked={item.dose}
+                            dataVacina={item.dataVacina}
+                            comprovante={item.urlComprovante}
+                            proxVacina={item.proxVacina}
+
+                        /> 
+                    }}/>
+                        
 
                     <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={goToNovaVacina}>
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Nova Vacina</Text>

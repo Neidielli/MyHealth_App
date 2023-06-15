@@ -77,7 +77,7 @@ const NovaVacina = (props) => {
        launchCamera({ mediaType: 'photo', cameraType: 'back', quality: 1})
         .then((result) => {
             setComprovante(result.assets[0])
-            setUrlComprovante(result.assets[0].uri)
+            setUrlComprovante(result.assets[0].uri)   
         })
         .catch((error) => {
             console.log("Erro ao capturar imagem: " + JSON.stringify(error))

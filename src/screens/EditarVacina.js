@@ -65,8 +65,10 @@ const EditarVacina = (props) => {
             })
     }
 
+    console.log(props.id)
     const salvarAlteracoes = async () => {
         const idDocumento = props.route.params.id
+        
 
         const refDoc = doc(db, "vacinas", idDocumento)
 
@@ -82,8 +84,8 @@ const EditarVacina = (props) => {
                     .then((url) => {
                         updateDoc(refDoc, {
                             dataVacina: dataVacina,
-                            vacina: vacina,
-                            dose: dose,
+                            vacina: nome,
+                            dose: checked,
                             urlComprovante: url,
                             proxVacina: proxVacina
                         })
