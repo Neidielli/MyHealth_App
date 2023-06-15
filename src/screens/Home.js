@@ -9,7 +9,7 @@ import { onSnapshot, query, collection } from "firebase/firestore";
 
 const Home = (props) => {
 
-     const [vacinas, setVacinas] = useState([])
+    const [vacinas, setVacinas] = useState([])
 
     const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()

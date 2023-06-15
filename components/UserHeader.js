@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native"
 
-
 export const UserHeader = () => {
+
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Olá Jurandir</Text>
+            <Text style={styles.text}>Olá</Text>
         </View>
     )
 }

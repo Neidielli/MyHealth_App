@@ -65,7 +65,6 @@ const EditarVacina = (props) => {
             })
     }
 
-    console.log(props.id)
     const salvarAlteracoes = async () => {
         const idDocumento = props.route.params.id
         

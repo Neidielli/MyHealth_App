@@ -8,28 +8,27 @@ const Vacina = (props) => {
         props.navigation.navigate("EditarVacina", {id: idDocumento, vacina: props.vacina, checked: props.checked, dataVacina: props.dataVacina, comprovante: props.comprovante, proxVacina: props.proxVacina})
     }
 
-    console.log(props.checked);
     return (
-        <TouchableOpacity style={styles.container} onPress={() => {gotoEditar()}}>
+            <TouchableOpacity style={styles.container} onPress={() => {gotoEditar()}}>
         
-            <Text style={styles.nome}>{props.vacina}</Text>
-            <Text style={styles.dose}>{props.checked}</Text>
-            <Text style={styles.dataDose}>{props.dataVacina}</Text>
+                <Text style={styles.nome}>{props.vacina}</Text>
+                <Text style={styles.dose}>{props.checked}</Text>
+                <Text style={styles.dataDose}>{props.dataVacina}</Text>
 
-            {
-                props.comprovante ?
-                    <Image source={{ uri: props.comprovante }} style={{ width: 165, height: 60, marginLeft: 'auto', marginRight: 'auto' }} />
+                {
+                    props.comprovante ?
+                        <Image source={{ uri: props.comprovante }} style={{ width: 165, height: 60, marginLeft: 'auto', marginRight: 'auto' }} />
+                        :
+                        null
+                }
+                
+                {(props.proxVacina != '') ? 
+                    <Text style={styles.proxDose}>Proxima dose: {props.proxVacina}</Text>
                     :
-                    null
-            }
-            
-            {(props.proxVacina != '') ? 
-                <Text style={styles.proxDose}>Proxima dose: {props.proxVacina}</Text>
-                :
-                <Text style={styles.proxDose}>Não há próxima dose</Text>
-            }
+                    <Text style={styles.proxDose}>Não há próxima dose</Text>
+                }
 
-        </TouchableOpacity>
+            </TouchableOpacity>
     );
 }
 
