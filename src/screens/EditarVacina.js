@@ -9,6 +9,8 @@ import { updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { launchCamera } from "react-native-image-picker";
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from "../firebase/config.js";
+import { auth } from "../firebase/config.js";
+import { getAuth } from "firebase/auth";
 
 const EditarVacina = (props) => {
 
@@ -22,6 +24,9 @@ const EditarVacina = (props) => {
     const [proxVacina, setProxVacina] = useState('');
     const [comprovante, setComprovante] = useState();
     const [urlComprovante, setUrlComprovante] = useState('');
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const userId = currentUser ? currentUser.uid : null;
 
     // pega o que tá no props e coloca nos estados - hook react
     useEffect(() => {
@@ -30,7 +35,7 @@ const EditarVacina = (props) => {
         setChecked(props.route.params.checked)
         setId(props.route.params.id)
         setProxVacina(props.route.params.proxVacina)
-        setUrlComprovante(props.route.params.urlComprovante)
+        setUrlComprovante(props.route.params.comprovante)
     }, [])
 
     const comprovanteVacina = () => {
@@ -65,7 +70,7 @@ const EditarVacina = (props) => {
 
         const refDoc = doc(db, "vacinas", idDocumento)
 
-        const imageRef = ref(storage, "images/vacina.jpg")
+        const imageRef = ref(storage, "images/" +userId+ Math.random(1,10))
 
         const file = await fetch(urlComprovante)
         const  blob = await file.blob()
@@ -190,7 +195,13 @@ const EditarVacina = (props) => {
                                 <Text style={theme == 'light' ? estilo.light.txtComprovante : estilo.dark.txtComprovante}>Selecionar imagem</Text>
                             </TouchableOpacity>
 
-                            <Image source={{ uri: urlComprovante }} style={{ width: 100, height: 100 }}/>
+                            {/* <Image source={{ uri: urlComprovante }} style={{ width: 100, height: 100 }}/> */}
+                            {
+                                urlComprovante ?
+                                    <Image source={{ uri: urlComprovante }} style={{ width: 100, height: 100 }}/>
+                                    :
+                                    null
+                            }
                         </View>
                     </View> 
 
