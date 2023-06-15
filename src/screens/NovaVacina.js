@@ -9,6 +9,9 @@ import MaskInput, { Masks } from 'react-native-mask-input';
 
 import { addDoc, collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../firebase/config.js";
+import { auth } from "../firebase/config.js";
+import { getAuth } from "firebase/auth";
+
 
 
 const NovaVacina = (props) => {
@@ -20,6 +23,9 @@ const NovaVacina = (props) => {
     const [comprovante, setComprovante] = useState();
     const [urlComprovante, setUrlComprovante] = useState('');
     const theme = Appearance.getColorScheme()
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const userId = currentUser ? currentUser.uid : null;
 
     const cleanStates = () =>{
         setDataVacina('')
@@ -31,7 +37,7 @@ const NovaVacina = (props) => {
     const cadastrar = async () => {
         const colecao = collection(db, "vacinas");
 
-        const imageRef = ref(storage, "images/vacina.jpg")
+        const imageRef = ref(storage, "images/" +userId+ Math.random(1,10))
 
         const file = await fetch(urlComprovante)
         const blob = await file.blob()
