@@ -33,6 +33,7 @@ const Login = (props) => {
     })
     .catch((error) => {
       console.log("Error on login: " + JSON.stringify(error))
+      setShowInvalidMsg(true);
     })
     .finally(() => {
       setLoading(false)
@@ -82,7 +83,7 @@ const Login = (props) => {
               onChangeText={setPassword}
             />
           </View>
-          {showInvalidMsg && <Text style={{ textAlign: 'center', color: '#ff0000' }}>E-mail e/ou senha inválidos</Text>}
+          {showInvalidMsg && <Text style={{ marginTop: 10, fontSize: 20, fontFamily: 'AveriaLibre-Regular', textAlign: 'center', color: '#ff0000' }}>E-mail e/ou senha inválidos</Text>}
          
           
 

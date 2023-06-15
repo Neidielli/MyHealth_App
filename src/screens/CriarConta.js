@@ -29,27 +29,30 @@ const CriarConta = (props) => {
     }
 
     const cadastrar = () => {
-
-        const colecao = collection(db, "usuarios");
-        const documento = {
-            nome: nomeCompleto,
-            genero: genero,
-            dataNascimento: dataNasc,
-            email: email,
-            senha: senha,
+        if (senha !== confirmarSenha) {
+            setShowIncorrectPassword(true);
+            return;
+        } else {
+            const colecao = collection(db, "usuarios");
+            const documento = {
+                nome: nomeCompleto,
+                genero: genero,
+                dataNascimento: dataNasc,
+                email: email,
+                senha: senha,
+            }
+    
+            addDoc(colecao, documento)
+                .then((refDoc) => {
+                    console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
+                    cleanStates()
+                })
+                .catch((error) => {
+                    console.log("Error: " + JSON.stringify(error))
+                })
         }
 
-        // const refDoc = doc(db, UUID)
-        // setDoc()
-
-        addDoc(colecao, documento)
-            .then((refDoc) => {
-                console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
-                cleanStates()
-            })
-            .catch((error) => {
-                console.log("Error: " + JSON.stringify(error))
-            })
+       
 
         // createUserWithEmailAndPassword(auth, email, senha)
         // .then((user) => {
