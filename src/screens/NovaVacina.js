@@ -7,7 +7,7 @@ import { launchCamera } from 'react-native-image-picker'
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
 import MaskInput, { Masks } from 'react-native-mask-input';
 
-import { addDoc, collection, setDoc, doc } from "firebase/firestore";
+import { addDoc, collection, setDoc, doc, query, where, getDocs } from "firebase/firestore";
 import { db, storage } from "../firebase/config.js";
 import { auth } from "../firebase/config.js";
 import { getAuth } from "firebase/auth";
@@ -35,10 +35,14 @@ const NovaVacina = (props) => {
     }
 
     const cadastrar = async () => {
-        const colecao = collection(db, "vacinas");
+        const q = query(collection(db, "usuarios"), where("userId", "==", userId)) // encontrar as vacinas do usuario atual
+        const querySnapshot = await getDocs(q);
+        const usuarioDoc = querySnapshot.docs[0];
+        const colecaoVacinas = collection(usuarioDoc.ref, "vacinas"); // ao add vacinas, ele pega a ref do usuario
 
         const imageRef = ref(storage, "images/" +userId+ Math.random(1,10))
 
+        
         const file = await fetch(urlComprovante)
         const blob = await file.blob()
 
@@ -55,7 +59,7 @@ const NovaVacina = (props) => {
                             proxVacina: proxVacina
                         }
         
-                        addDoc(colecao, documento)
+                        addDoc(colecaoVacinas, documento)
                             .then((refDoc) => {
                                 console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
                                 cleanStates()
@@ -194,7 +198,7 @@ const NovaVacina = (props) => {
                         /> 
                     </View> 
                 
-                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={cadastrar}>
+                    <TouchableOpacity style={theme == 'light' ? estilo.light.primaryButton : estilo.dark.primaryButton} onPress={() => {cadastrar()}}>
                         <Text style={theme == 'light' ? estilo.light.buttonText : estilo.dark.buttonText}>Cadastrar</Text>
                     </TouchableOpacity>
 
