@@ -3,41 +3,58 @@ import { estilo } from './css/ProximaVacinas_sty.js'
 import { useState, useEffect } from "react";
 import {TextInput } from 'react-native-paper';
 
-import Vacina from '../../components/CardVacina.js';
-import { db } from "../firebase/config.js";
-import { onSnapshot, query, collection } from "firebase/firestore";
+import Vacina from '../../components/CardProxVacinas.js';
+import { db, auth } from "../firebase/config.js";
+import { onSnapshot, query, collection, where, getDocs, doc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const ProximasVacinas = (props) => {
 
-    const [vacinas, setVacinas] = useState([])
-
-    const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()
+    const [listaVacinas, setListaVacinas] = useState([]) // guarda a lista de vacinas que está no firestore
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    const userId = currentUser ? currentUser.uid : null;
+
     const goToNovaVacina = () => {
         props.navigation.navigate('NovaVacina');
     }
-    // const [searchQuery, setSearchQuery] = useState('');
-    // const Search = query => setSearchQuery(query);
-    const [listaVacinas, setListaVacinas] = useState([]) // guarda a lista de vacinas que está no firestore
 
     useEffect(() => {
-        const q = query(collection(db, "vacinas"))
+        const fetchData = async () => {
+            try {
+                const q = query(collection(db, "usuarios"), where("userId", "==", userId));
+                const querySnapshot = await getDocs(q); // Tira um snapshot de usuarios collection
+                const usuarioDoc = querySnapshot.docs[0];
+    
+                const usuarioRef = doc(db, "usuarios", usuarioDoc.id); // Ref ao usuario
+                const vacinaRef = collection(usuarioRef, "vacinas"); // Ref a vacinas collection
+                const docsVacina = await getDocs(vacinaRef); 
+    
+                const vacinas = []; // Inicializa o Array
+    
+                docsVacina.forEach((doc) => {
+                    vacinas.push({
+                        id: doc.id,
+                        dataVacina: doc.data().dataVacina,
+                        vacina: doc.data().vacina,
+                        dose: doc.data().dose,
+                        urlComprovante: doc.data().urlComprovante,
+                        proxVacina: doc.data().proxVacina
+                    });
+    
+                    console.log("Documento: " + JSON.stringify(doc.data()));
+                });
+    
+                setListaVacinas(vacinas);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+    
+        fetchData();
+    }, []);
 
-        onSnapshot(q, (snapshot) => {
-            const vacinas = []; // limpa o array
-            
-            snapshot.forEach((doc) => {
-                vacinas.push({
-                    id: doc.id,
-                    vacina: doc.data().vacina,
-                    proxVacina: doc.data().proxVacina
-                })
-                console.log("Documento: " + JSON.stringify(doc.data()))
-            })
-
-            setListaVacinas(vacinas)
-        })
-    }, [])
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
 

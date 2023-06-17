@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import {TextInput, Searchbar } from 'react-native-paper';
 import { FlatList } from "react-native-gesture-handler";
 import Vacina from '../../components/CardVacina.js';
-import { db } from "../firebase/config.js";
+import { db, auth } from "../firebase/config.js";
 import { onSnapshot, query, collection, where, getDocs, QuerySnapshot, doc } from "firebase/firestore";
-import { auth } from "../firebase/config.js";
 import { getAuth } from "firebase/auth";
 
 const Home = (props) => {
