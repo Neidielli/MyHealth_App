@@ -32,42 +32,44 @@ const CriarConta = (props) => {
         if (senha !== confirmarSenha) {
             setShowIncorrectPassword(true);
             return;
-        } else {
-            const colecao = collection(db, "usuarios");
+        } else {            
             const documento = {
                 nome: nomeCompleto,
                 genero: genero,
                 dataNascimento: dataNasc,
                 email: email,
-                senha: senha,
+                senha: senha,                
             }
+
+            createUserWithEmailAndPassword(auth, email, senha)
+            .then((userInfo) => { // informações de credenciais
+                // chamado para a criação de documento com os dados do usuario no firestore
     
-            addDoc(colecao, documento)
-                .then((refDoc) => {
-                    console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
-                    cleanStates()
-                })
-                .catch((error) => {
-                    console.log("Error: " + JSON.stringify(error))
-                })
+                var user = userInfo.user // informação do usuario
+                const userId = { ...documento, userId: user.uid}; // adiciona o id do usuario ao documento
+                const colecao = collection(db, "usuarios");
+    
+                addDoc(colecao, userId)
+                    .then((refDoc) => {
+                        console.log("Documento inserido com sucesso: " + JSON.stringify(refDoc))
+                        cleanStates()
+                    })
+                    .catch((error) => {
+                        console.log("Error: " + JSON.stringify(error))
+                    })
+    
+    
+                console.log("Usuário criado com sucesso: " + JSON.stringify(user))
+                props.navigation.navigate('Login');
+            })
+            .catch((error) => {
+                console.log("Erro ao cadastrar usuário: " + JSON.stringify(error))
+            })
+    
+            props.navigation.navigate('Login');
+            
         }
 
-       
-
-        // createUserWithEmailAndPassword(auth, email, senha)
-        // .then((user) => {
-        //     // chamado para a criação de documento com os dados do usuario no firestore
-        //     console.log("Usuário criado com sucesso: " + JSON.stringify(user))
-        //     props.navigation.navigate('Login');
-        // })
-        // .catch((error) => {
-        //     console.log("Erro ao cadastrar usuário: " + JSON.stringify(error))
-        // })
-        // if (senha !== confirmarSenha) {
-        //     setShowIncorrectPassword(true);
-        //     return;
-        // }
-        // props.navigation.navigate('Login');
     }
 
     return (
