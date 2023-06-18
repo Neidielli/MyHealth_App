@@ -10,7 +10,8 @@ import { getAuth } from "firebase/auth";
 
 const Home = (props) => {
 
-    const [vacinas, setVacinas] = useState([])
+    const [vacinas, setVacinas] = useState([]);
+    const [originalVacinas, setOriginalVacinas] = useState([]);
     const [pesquisa, setPesquisa] = useState('')
     const theme = Appearance.getColorScheme()
     const [searchQuery, setSearchQuery] = useState('');
@@ -51,6 +52,7 @@ const Home = (props) => {
               });
       
               setListaVacinas(vacinas);
+              setOriginalVacinas(vacinas);
             });
       
             // Retorne uma função de limpeza para cancelar a inscrição no momento da desmontagem do componente
@@ -63,6 +65,15 @@ const Home = (props) => {
         fetchData();
       }, [userId]);
 
+      const handleSearch = (query) => {
+        setSearchQuery(query);
+        const filteredVacinas = originalVacinas.filter((vacina) =>
+          vacina.vacina.toLowerCase().includes(query.toLowerCase())
+        );
+        setListaVacinas(filteredVacinas);
+      };
+
+
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
                 <View style={theme == 'light' ? estilo.light.header : estilo.dark.header}>
@@ -71,7 +82,7 @@ const Home = (props) => {
                         icon={require('../../assets/images/searchIcon.png')}
                         style={theme == 'light' ? estilo.light.srcBar : estilo.dark.srcBar}
                         placeholder="Pesquisar Vacina..."
-                        onChangeText={Search}
+                        onChangeText={handleSearch}
                         value={searchQuery}
                         iconColor="#8B8B8B"
                         placeholderTextColor="#8B8B8B"
