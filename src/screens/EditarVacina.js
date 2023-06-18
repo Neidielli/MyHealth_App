@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import {TextInput, RadioButton } from 'react-native-paper';
 import MaskInput, { Masks } from 'react-native-mask-input';
 
-import { updateDoc, doc, deleteDoc } from "firebase/firestore";
+import { updateDoc, doc, deleteDoc, query, where, getDocs, collection } from "firebase/firestore";
 import { launchCamera } from "react-native-image-picker";
 import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from "../firebase/config.js";
@@ -50,12 +50,15 @@ const EditarVacina = (props) => {
          })
     }
 
-    const excluir = () => {
+    const excluir = async () => {
         const idDocumento = props.route.params.id
 
-        const refDoc = doc(db, "vacinas", idDocumento)
+        const q = query(collection(db, "usuarios"), where("userId", "==", userId)) // encontrar as vacinas do usuario atual
+        const querySnapshot = await getDocs(q);
+        const usuarioDoc = querySnapshot.docs[0];
+        const colecaoVacinas = doc(collection(usuarioDoc.ref, "vacinas"), idDocumento);
 
-        deleteDoc(refDoc)
+        await deleteDoc(colecaoVacinas)
             .then(() =>{
                 console.log("Documento excluido com sucesso!")
                 props.navigation.pop()
@@ -66,10 +69,10 @@ const EditarVacina = (props) => {
     }
 
     const salvarAlteracoes = async () => {
-        const idDocumento = props.route.params.id
-        
-
-        const refDoc = doc(db, "vacinas", idDocumento)
+        const q = query(collection(db, "usuarios"), where("userId", "==", userId)) // encontrar as vacinas do usuario atual
+        const querySnapshot = await getDocs(q);
+        const usuarioDoc = querySnapshot.docs[0];
+        const colecaoVacinas = collection(usuarioDoc.ref, "vacinas"); // ao add vacinas, ele pega a ref do usuario
 
         const imageRef = ref(storage, "images/" +userId+ Math.random(1,10))
 
@@ -79,9 +82,9 @@ const EditarVacina = (props) => {
         uploadBytes(imageRef, blob, { contentType: 'image/jpeg' })
             .then((result) => {
                 console.log("Arquivo enviado com sucesso.")
-                getDownloadURL(imageRef)
+                getDownloadURL(result.ref)
                     .then((url) => {
-                        updateDoc(refDoc, {
+                        updateDoc(doc(colecaoVacinas, id), {
                             dataVacina: dataVacina,
                             vacina: nome,
                             dose: checked,

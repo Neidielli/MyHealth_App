@@ -26,39 +26,42 @@ const Home = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
-                const q = query(collection(db, "usuarios"), where("userId", "==", userId));
-                const querySnapshot = await getDocs(q); // Take a snapshot of the usuarios collection
-                const usuarioDoc = querySnapshot.docs[0];
-    
-                const usuarioRef = doc(db, "usuarios", usuarioDoc.id); // Reference to the usuario
-                const vacinaRef = collection(usuarioRef, "vacinas"); // Reference to the vacinas collection
-                const docsVacina = await getDocs(vacinaRef); // Retrieve the documents in the vacinas collection
-    
-                const vacinas = []; // Initialize the array
-    
-                docsVacina.forEach((doc) => {
-                    vacinas.push({
-                        id: doc.id,
-                        dataVacina: doc.data().dataVacina,
-                        vacina: doc.data().vacina,
-                        dose: doc.data().dose,
-                        urlComprovante: doc.data().urlComprovante,
-                        proxVacina: doc.data().proxVacina
-                    });
-    
-                    console.log("Documento: " + JSON.stringify(doc.data()));
+          try {
+            const q = query(collection(db, "usuarios"), where("userId", "==", userId));
+            const querySnapshot = await getDocs(q);
+            const usuarioDoc = querySnapshot.docs[0];
+      
+            const usuarioRef = doc(db, "usuarios", usuarioDoc.id);
+            const vacinaRef = collection(usuarioRef, "vacinas");
+      
+            const unsubscribe = onSnapshot(vacinaRef, (snapshot) => {
+              const vacinas = []; // Inicializa o array
+      
+              snapshot.forEach((doc) => {
+                vacinas.push({
+                  id: doc.id,
+                  dataVacina: doc.data().dataVacina,
+                  vacina: doc.data().vacina,
+                  dose: doc.data().dose,
+                  urlComprovante: doc.data().urlComprovante,
+                  proxVacina: doc.data().proxVacina
                 });
-    
-                setListaVacinas(vacinas);
-            } catch (error) {
-                console.log(error);
-            }
+      
+                console.log("Documento: " + JSON.stringify(doc.data()));
+              });
+      
+              setListaVacinas(vacinas);
+            });
+      
+            // Retorne uma função de limpeza para cancelar a inscrição no momento da desmontagem do componente
+            return () => unsubscribe();
+          } catch (error) {
+            console.log(error);
+          }
         };
-    
+      
         fetchData();
-    }, []);
-
+      }, [userId]);
 
     return (
         <View style={theme == 'light' ? estilo.light.body : estilo.dark.body}>
