@@ -11,6 +11,7 @@ import { uploadBytes, ref, getDownloadURL } from 'firebase/storage';
 import { db, storage } from "../firebase/config.js";
 import { auth } from "../firebase/config.js";
 import { getAuth } from "firebase/auth";
+import { useSelector } from 'react-redux';
 
 const EditarVacina = (props) => {
 
@@ -27,6 +28,8 @@ const EditarVacina = (props) => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
     const userId = currentUser ? currentUser.uid : null;
+    const idVacina = useSelector((state) => state.vacina.id)
+    const idUsuario = useSelector((state) => state.usuario.id)
 
     // pega o que tá no props e coloca nos estados - hook react
     useEffect(() => {

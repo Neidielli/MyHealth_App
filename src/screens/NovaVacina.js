@@ -11,6 +11,7 @@ import { addDoc, collection, setDoc, doc, query, where, getDocs } from "firebase
 import { db, storage } from "../firebase/config.js";
 import { auth } from "../firebase/config.js";
 import { getAuth } from "firebase/auth";
+import { useSelector } from 'react-redux';
 
 
 
@@ -26,6 +27,7 @@ const NovaVacina = (props) => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
     const userId = currentUser ? currentUser.uid : null;
+    const idUsuario = useSelector((state) => state.usuario.id)
 
     const cleanStates = () =>{
         setDataVacina('')

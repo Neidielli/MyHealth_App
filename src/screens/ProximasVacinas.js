@@ -7,6 +7,7 @@ import Vacina from '../../components/CardProxVacinas.js';
 import { db, auth } from "../firebase/config.js";
 import { onSnapshot, query, collection, where, getDocs, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { useSelector } from 'react-redux';
 
 const ProximasVacinas = (props) => {
 
@@ -15,6 +16,7 @@ const ProximasVacinas = (props) => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
     const userId = currentUser ? currentUser.uid : null;
+    const idUser = useSelector((state) => state.usuario.id)
 
     const goToNovaVacina = () => {
         props.navigation.navigate('NovaVacina');
@@ -29,11 +31,11 @@ const ProximasVacinas = (props) => {
     
                 const usuarioRef = doc(db, "usuarios", usuarioDoc.id); // Ref ao usuario
                 const vacinaRef = collection(usuarioRef, "vacinas"); // Ref a vacinas collection
-                const docsVacina = await getDocs(vacinaRef); 
     
-                const vacinas = []; // Inicializa o Array
+                const unsubscribe = onSnapshot(vacinaRef, (snapshot) => {
+                    const vacinas = []; // Inicializa o array
     
-                docsVacina.forEach((doc) => {
+                snapshot.forEach((doc) => {
                     vacinas.push({
                         id: doc.id,
                         dataVacina: doc.data().dataVacina,
@@ -47,6 +49,9 @@ const ProximasVacinas = (props) => {
                 });
     
                 setListaVacinas(vacinas);
+                });
+                // Retorne uma função de limpeza para cancelar a inscrição no momento da desmontagem do componente
+                return () => unsubscribe();
             } catch (error) {
                 console.log(error);
             }

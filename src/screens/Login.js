@@ -4,6 +4,8 @@ import { estilo } from './css/Login_sty.js'
 import { ActivityIndicator, MD2Colors, Avatar, HelperText, TextInput } from 'react-native-paper';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/config.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { reducerSetUsuario } from "../redux/usuarioSlice";
 
 const Login = (props) => {
 
@@ -13,31 +15,26 @@ const Login = (props) => {
   const onChangeText = email => setEmail(email)
   const [showInvalidMsg, setShowInvalidMsg] = useState(false);
   const [isLoading, setLoading] = useState(false)
+  const dispatch = useDispatch();
 
-  const goToHome = () => {
-    if(!email.includes('@') || password < 8){
-      setShowInvalidMsg(true);
-    } else {
-      setShowInvalidMsg(false);
-      props.navigation.navigate('DrawerNavigation', { screen: 'Home' });
-    }
-  }
 
   const autenticar = () => {
     setLoading(true)
 
     signInWithEmailAndPassword(auth, email, password)
-    .then((userLogged) => {
-      console.log("Logado com sucesso: " + JSON.stringify(userLogged))
-      props.navigation.navigate('DrawerNavigation', { screen: 'Home' });
-    })
-    .catch((error) => {
-      console.log("Error on login: " + JSON.stringify(error))
-      setShowInvalidMsg(true);
-    })
-    .finally(() => {
-      setLoading(false)
-    })
+      .then((userLogged) => {
+        dispatch(reducerSetUsuario({ id: userLogged.user.uid }))
+        console.log("Logado com sucesso: " + JSON.stringify(userLogged))
+        // props.navigation.navigate('DrawerNavigation', { screen: 'Home' });
+        props.navigation.push('DrawerNavigation', { screen: 'Home' });
+      })
+      .catch((error) => {
+        console.log("Error on login: " + JSON.stringify(error))
+        setShowInvalidMsg(true);
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (

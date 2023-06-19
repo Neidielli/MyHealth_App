@@ -7,6 +7,8 @@ import Vacina from '../../components/CardVacina.js';
 import { db, auth } from "../firebase/config.js";
 import { onSnapshot, query, collection, where, getDocs, QuerySnapshot, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { useDispatch, useSelector } from 'react-redux';
+import { reducerSetUsuario } from '../redux/usuarioSlice';
 
 const Home = (props) => {
 
@@ -20,6 +22,8 @@ const Home = (props) => {
     const auth = getAuth();
     const currentUser = auth.currentUser;
     const userId = currentUser ? currentUser.uid : null;
+    const idUsuario = useSelector((state) => state.usuario.id)
+    const dispatch = useDispatch();
 
     const goToNovaVacina = () => {
         props.navigation.navigate('NovaVacina');
@@ -34,6 +38,8 @@ const Home = (props) => {
       
             const usuarioRef = doc(db, "usuarios", usuarioDoc.id);
             const vacinaRef = collection(usuarioRef, "vacinas");
+
+            // dispatch(reducerSetUsuario({ nome: doc.data().nome, id: doc.id }))
       
             const unsubscribe = onSnapshot(vacinaRef, (snapshot) => {
               const vacinas = []; // Inicializa o array

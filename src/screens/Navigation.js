@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { CustomDrawer } from '../../components/customDrawer';
 import { Image } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from '../redux/store';
 
 import React from 'react';
 import Login from './Login';
@@ -51,21 +53,23 @@ const Navigation = () => {
     const Stack = createStackNavigator()
 
     return (
-        <NavigationContainer>
+        <Provider store={store}>
+            <NavigationContainer>
 
-            <Stack.Navigator screenOptions={{headerTitleStyle: {fontSize: 30, fontFamily: 'AveriaLibre-Regular'}, headerTintColor: '#419ED7', headerStyle: {backgroundColor: '#C1E7E3'}}}>
-            
-                <Stack.Screen name='Login' component={Login} options={{headerShown:false}} />
-                <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} options={{headerShown: false }} />
-                <Stack.Screen name='CriarConta' component={CriarConta} options={{headerTitle: 'Nova Conta'}} />
-                <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} options={{headerTitle: 'MyHealth'}} />
-                <Stack.Screen name='NovaVacina' component={NovaVacina} options={{headerTitle: 'Nova Vacina'}} />
-                <Stack.Screen name='EditarVacina' component={EditarVacina} options={{headerTitle: 'Editar Vacina'}} />
-                <Stack.Screen name='ProximasVacinas' component={ProximasVacinas} options={{headerTitle: 'Proximas Vacinas'}} />
+                <Stack.Navigator screenOptions={{headerTitleStyle: {fontSize: 30, fontFamily: 'AveriaLibre-Regular'}, headerTintColor: '#419ED7', headerStyle: {backgroundColor: '#C1E7E3'}}}>
+                
+                    <Stack.Screen name='Login' component={Login} options={{headerShown:false}} />
+                    <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} options={{headerShown: false }} />
+                    <Stack.Screen name='CriarConta' component={CriarConta} options={{headerTitle: 'Nova Conta'}} />
+                    <Stack.Screen name='RecuperarSenha' component={RecuperarSenha} options={{headerTitle: 'MyHealth'}} />
+                    <Stack.Screen name='NovaVacina' component={NovaVacina} options={{headerTitle: 'Nova Vacina'}} />
+                    <Stack.Screen name='EditarVacina' component={EditarVacina} options={{headerTitle: 'Editar Vacina'}} />
+                    <Stack.Screen name='ProximasVacinas' component={ProximasVacinas} options={{headerTitle: 'Proximas Vacinas'}} />
 
-            </Stack.Navigator>
+                </Stack.Navigator>
 
-        </NavigationContainer>
+            </NavigationContainer>
+        </Provider>
     )
 }
 export default Navigation;
